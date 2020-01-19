@@ -9,7 +9,7 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/createActivityToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.Light.AppBar"
@@ -31,7 +31,7 @@
             android:paddingBottom="100dp">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/lessonNameLayout"
+                android:id="@+id/nameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:endIconDrawable="@drawable/ic_lens_white_24dp"
@@ -40,14 +40,14 @@
                 app:startIconDrawable="@drawable/ic_lesson_name_white_24dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/lessonNameEditText"
+                    android:id="@+id/nameEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/name" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/lessonTeacherLayout"
+                android:id="@+id/teacherLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:endIconDrawable="@drawable/ic_lens_white_24dp"
@@ -56,14 +56,14 @@
                 app:startIconDrawable="@drawable/ic_person_white_24dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/lessonTeacherEditText"
+                    android:id="@+id/teacherEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/teacher" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/lessonBuildingLayout"
+                android:id="@+id/buildingLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:endIconDrawable="@drawable/ic_lens_white_24dp"
@@ -72,14 +72,14 @@
                 app:startIconDrawable="@drawable/ic_building_white_24dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/lessonBuildingEditText"
+                    android:id="@+id/buildingEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/building" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/lessonClassroomLayout"
+                android:id="@+id/classroomLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:endIconDrawable="@drawable/ic_lens_white_24dp"
@@ -88,14 +88,14 @@
                 app:startIconDrawable="@drawable/ic_classroom_white_24dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/lessonClassroomEditText"
+                    android:id="@+id/classroomEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/classroom" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/lessonTypeLayout"
+                android:id="@+id/typeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:endIconDrawable="@drawable/ic_lens_white_24dp"
@@ -104,7 +104,7 @@
                 app:startIconDrawable="@drawable/ic_type_white_24dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/lessonTypeEditText"
+                    android:id="@+id/typeEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/type" />
@@ -116,7 +116,6 @@
                 android:layout_marginTop="40dp">
 
                 <TextView
-                    android:id="@+id/startText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
@@ -142,7 +141,6 @@
                 android:layout_marginTop="15dp">
 
                 <TextView
-                    android:id="@+id/endText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
