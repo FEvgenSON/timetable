@@ -6,24 +6,31 @@ import com.fevgenson.timetable.room.entity.*
 @Dao
 abstract class LessonDaoWithoutFlowable {
 
+    @Transaction
     @Query("SELECT * FROM lesson WHERE weekType == :weekType AND day == :day")
     abstract fun getLessons(weekType: Int, day: Int): List<Lesson>
 
+    @Transaction
     @Query("SELECT name from name")
     abstract fun getNameWithLessons(): List<NameWithLessons>
 
+    @Transaction
     @Query("SELECT name from teacher")
     abstract fun getTeacherWithLessons(): List<TeacherWithLessons>
 
+    @Transaction
     @Query("SELECT name from building")
     abstract fun getBuildingWithLessons(): List<BuildingWithLessons>
 
+    @Transaction
     @Query("SELECT name from classroom")
     abstract fun getClassroomWithLessons(): List<ClassroomWithLessons>
 
+    @Transaction
     @Query("SELECT name from type")
     abstract fun getTypeWithLessons(): List<TypeWithLessons>
 
+    @Transaction
     @Query("SELECT name from time")
     abstract fun getTimeWithLessons(): List<TimeWithLessons>
 

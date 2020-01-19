@@ -51,7 +51,9 @@ data class Lesson(
     var classroom: String,
     var type: String,
     var time: String,
+    @ColumnInfo(index = true)
     var weekType: Int,
+    @ColumnInfo(index = true)
     var day: Int
 )
 

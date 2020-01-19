@@ -7,24 +7,31 @@ import io.reactivex.Flowable
 @Dao
 abstract class LessonDao {
 
+    @Transaction
     @Query("SELECT * FROM lesson WHERE weekType == :weekType AND day == :day")
     abstract fun getLessons(weekType: Int, day: Int): Flowable<List<Lesson>>
 
+    @Transaction
     @Query("SELECT name from name")
     abstract fun getNameWithLessons(): Flowable<List<NameWithLessons>>
 
+    @Transaction
     @Query("SELECT name from teacher")
     abstract fun getTeacherWithLessons(): Flowable<List<TeacherWithLessons>>
 
+    @Transaction
     @Query("SELECT name from building")
     abstract fun getBuildingWithLessons(): Flowable<List<BuildingWithLessons>>
 
+    @Transaction
     @Query("SELECT name from classroom")
     abstract fun getClassroomWithLessons(): Flowable<List<ClassroomWithLessons>>
 
+    @Transaction
     @Query("SELECT name from type")
     abstract fun getTypeWithLessons(): Flowable<List<TypeWithLessons>>
 
+    @Transaction
     @Query("SELECT name from time")
     abstract fun getTimeWithLessons(): Flowable<List<TimeWithLessons>>
 
