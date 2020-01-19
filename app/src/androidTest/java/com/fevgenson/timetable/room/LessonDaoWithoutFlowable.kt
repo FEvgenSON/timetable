@@ -7,7 +7,7 @@ import com.fevgenson.timetable.room.entity.*
 abstract class LessonDaoWithoutFlowable {
 
     @Transaction
-    @Query("SELECT * FROM lesson WHERE weekType == :weekType AND day == :day")
+    @Query("SELECT * FROM lesson WHERE weekType == :weekType AND day == :day ORDER BY time")
     abstract fun getLessons(weekType: Int, day: Int): List<Lesson>
 
     @Transaction

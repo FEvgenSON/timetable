@@ -8,7 +8,7 @@ import io.reactivex.Flowable
 abstract class LessonDao {
 
     @Transaction
-    @Query("SELECT * FROM lesson WHERE weekType == :weekType AND day == :day")
+    @Query("SELECT * FROM lesson WHERE weekType == :weekType AND day == :day ORDER BY time")
     abstract fun getLessons(weekType: Int, day: Int): Flowable<List<Lesson>>
 
     @Transaction

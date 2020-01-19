@@ -75,6 +75,22 @@ class DBTest {
         Assert.assertEquals(lesson.time, dbLesson.time)
     }
 
+    @Test
+    fun sort() {
+        val lessons = LessonTestHelper.createLessonList()
+        lessons.asReversed().forEach { dao.insertLessonAndColumns(it) }
+
+        lessons.forEach {
+            val dbLesson = dao.getLessons(it.weekType, it.day)[0]
+            Assert.assertEquals(it.name, dbLesson.name)
+            Assert.assertEquals(it.teacher, dbLesson.teacher)
+            Assert.assertEquals(it.building, dbLesson.building)
+            Assert.assertEquals(it.classroom, dbLesson.classroom)
+            Assert.assertEquals(it.type, dbLesson.type)
+            Assert.assertEquals(it.time, dbLesson.time)
+        }
+    }
+
     @After
     fun closeDB() {
         db.close()
