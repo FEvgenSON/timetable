@@ -110,7 +110,7 @@
                     android:hint="@string/type" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp">
@@ -119,26 +119,24 @@
                     android:id="@+id/startText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="start"
                     android:text="@string/start"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/startTimeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_gravity="end"
                     android:background="?selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
                     android:freezesText="true"
                     android:text="@string/set"
-                    android:textSize="18sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:textSize="18sp" />
+            </FrameLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp">
@@ -147,24 +145,22 @@
                     android:id="@+id/endText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="start"
                     android:text="@string/end"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/endTimeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_gravity="end"
                     android:background="?selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
                     android:freezesText="true"
                     android:text="@string/set"
-                    android:textSize="18sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:textSize="18sp" />
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/timeListTextView"
