@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">timetable</string>
+
+    <string name="timetable">Рассписание</string>
+    <string name="vocabulary">Словарь</string>
+    <string name="settings">Настройки</string>
 </resources>

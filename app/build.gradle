@@ -36,6 +36,10 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
     kaptAndroidTest "androidx.room:room-compiler:$room_version"
 
+    //viewpager
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+    implementation 'com.google.android.material:material:1.2.0-alpha03'
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
