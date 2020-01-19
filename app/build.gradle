@@ -36,6 +36,11 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
     kaptAndroidTest "androidx.room:room-compiler:$room_version"
 
+    //lifecycle
+    def lifecycle_version = "2.1.0"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+
     //viewpager
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'com.google.android.material:material:1.2.0-alpha03'
