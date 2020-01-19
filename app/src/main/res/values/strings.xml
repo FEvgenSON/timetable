@@ -4,4 +4,30 @@
     <string name="timetable">Рассписание</string>
     <string name="vocabulary">Словарь</string>
     <string name="settings">Настройки</string>
+
+    <string name="name">Название</string>
+    <string name="teacher">Преподаватель</string>
+    <string name="building">Корпус</string>
+    <string name="classroom">Аудитория</string>
+    <string name="start">Начало</string>
+    <string name="end">Конец</string>
+    <string name="type">Тип</string>
+    <string name="set_time">Выберите время</string>
+    <string name="set">Назначить</string>
+
+    <string name="create">Создание</string>
+    <string name="edit">Редактирование</string>
+
+    <string name="clear_fields">Отчистить поля</string>
+
+    <string name="empty_string_error">Поле обязательно к заполнению</string>
+    <string name="empty_time_error">Время не может быть пустым</string>
+    <string name="value_time_error">Время окночания должно быть позже времени начала</string>
+
+    <string name="choose_name">Выберите название</string>
+    <string name="choose_teacher">Выберите преподавателя</string>
+    <string name="choose_building">Выберите корпус</string>
+    <string name="choose_classroom">Выберите аудиторию</string>
+    <string name="choose_type">Выберите тип</string>
+    <string name="choose_time">Выберите время</string>
 </resources>

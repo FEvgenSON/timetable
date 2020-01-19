@@ -9,4 +9,22 @@
         <item name="colorControlHighlight">@color/primaryLightColor</item>
     </style>
 
+    <style name="AppTheme.Light.AppBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorAccent">@color/primaryColor</item>
+        <item name="colorControlHighlight">@color/primaryLightColor</item>
+    </style>
+
+    <style name="AppTheme.Light.AppBar.Popup" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorAccent">@color/primaryColor</item>
+        <item name="colorControlHighlight">@color/primaryLightColor</item>
+    </style>
+
 </resources>
