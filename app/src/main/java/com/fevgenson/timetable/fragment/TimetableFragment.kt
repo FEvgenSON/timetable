@@ -11,6 +11,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.fevgenson.timetable.R
 import com.fevgenson.timetable.activity.CreateActivity
 import com.fevgenson.timetable.adapter.WeekStateAdapter
+import com.fevgenson.timetable.time.TimeChecker
 import com.fevgenson.timetable.viewmodel.TimetableViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -38,18 +39,42 @@ class TimetableFragment : Fragment() {
         weekViewPager.orientation = ViewPager2.ORIENTATION_VERTICAL
         weekViewPager.isUserInputEnabled = false
         weekViewPager.offscreenPageLimit = 2
-        val adapter = WeekStateAdapter(this)
-        weekViewPager.adapter = adapter
+        weekViewPager.adapter = WeekStateAdapter(this)
         val weekTabTitles = resources.getStringArray(R.array.weeks)
+        val dayTabTitles = resources.getStringArray(R.array.days)
         TabLayoutMediator(weekTabs, weekViewPager, true) { tab: TabLayout.Tab, position: Int ->
-            tab.text = weekTabTitles[position]
+            if (position == TimeChecker.currentWeekType) {
+                tab.text = getString(R.string.today, weekTabTitles[position])
+            } else {
+                tab.text = weekTabTitles[position]
+            }
         }.attach()
+        //select today
+        weekTabs.getTabAt(TimeChecker.currentWeekType)?.select()
+        dayTabs.getTabAt(TimeChecker.currentDay)?.select()
+        weekTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                if (tab?.position == TimeChecker.currentWeekType) {
+                    dayTabs.getTabAt(TimeChecker.currentDay)?.text =
+                        getString(R.string.today, dayTabTitles[TimeChecker.currentDay])
+                } else {
+                    dayTabs.getTabAt(TimeChecker.currentDay)?.text =
+                        dayTabTitles[TimeChecker.currentDay]
+                }
+            }
+        })
     }
 
     private fun startCreateActivity() {
         val intent = Intent(activity, CreateActivity::class.java)
-        intent.putExtra(CreateActivity.DAY, 0)
-        intent.putExtra(CreateActivity.WEEK_TYPE, 0)
+        intent.putExtra(CreateActivity.DAY, dayTabs.selectedTabPosition)
+        intent.putExtra(CreateActivity.WEEK_TYPE, weekTabs.selectedTabPosition)
         startActivity(intent)
     }
 }
