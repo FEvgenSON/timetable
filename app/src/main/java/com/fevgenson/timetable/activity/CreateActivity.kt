@@ -182,12 +182,25 @@ class CreateActivity : AppCompatActivity() {
             button.visibility = View.INVISIBLE
             return
         }
+        button.setOnClickListener {
+            val fragment = DialogListFragment.newInstance(type)
+            fragment.resultListener = {
+                startTimeTextView.text = TimeChecker.getFirstTime(it)
+                endTimeTextView.text = TimeChecker.getSecondTime(it)
+            }
+            fragment.show(supportFragmentManager, "")
+        }
     }
 
     private fun showOrHideListButton(buttonLayout: TextInputLayout, size: Int, type: Int) {
         if (size == 0) {
             buttonLayout.isEndIconVisible = false
             return
+        }
+        buttonLayout.setEndIconOnClickListener {
+            val fragment = DialogListFragment.newInstance(type)
+            fragment.resultListener = { buttonLayout.editText?.setText(it) }
+            fragment.show(supportFragmentManager, "")
         }
     }
 }
