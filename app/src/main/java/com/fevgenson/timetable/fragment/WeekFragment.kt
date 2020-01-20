@@ -6,6 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.fevgenson.timetable.R
+import com.fevgenson.timetable.adapter.DayStateAdapter
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.fragment_timetable.*
+import kotlinx.android.synthetic.main.fragment_week.*
 
 class WeekFragment : Fragment() {
 
@@ -27,5 +32,23 @@ class WeekFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_week, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initViewPager()
+    }
+
+    private fun initViewPager() {
+        dayViewPager.offscreenPageLimit = 7
+        dayViewPager.adapter = DayStateAdapter(this, arguments!!.getInt(WEEK_TYPE))
+        val dayTabTitles = resources.getStringArray(R.array.days)
+        TabLayoutMediator(
+            (parentFragment as TimetableFragment).dayTabs,
+            dayViewPager,
+            true
+        ) { tab: TabLayout.Tab, position: Int ->
+            tab.text = dayTabTitles[position]
+        }.attach()
     }
 }
