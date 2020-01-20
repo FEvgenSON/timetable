@@ -1,6 +1,5 @@
 package com.fevgenson.timetable.viewmodel
 
-import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.fevgenson.timetable.R
@@ -58,7 +57,7 @@ class CreateViewModel(weekType: Int, day: Int, private val position: Int) :
             layoutError.value = R.id.typeLayout
             return
         }
-        if (!startTime.isDigitsOnly() || !endTime.isDigitsOnly()) {
+        if (!validateTime(startTime) || !validateTime(endTime)) {
             toastError.value = R.string.empty_time_error
             return
         }
@@ -80,6 +79,10 @@ class CreateViewModel(weekType: Int, day: Int, private val position: Int) :
             DBHolder.database.lessonDao().updateLessonAndColumns(savableLesson)
         }
         finish.value = true
+    }
+
+    fun validateTime(time: String): Boolean {
+        return time[0] == '0' || time[0] == '1' || time[0] == '2'
     }
 
     override fun onCleared() {

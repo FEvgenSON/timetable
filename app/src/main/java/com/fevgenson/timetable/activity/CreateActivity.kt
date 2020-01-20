@@ -10,7 +10,6 @@ import android.widget.TextView
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.text.isDigitsOnly
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -26,7 +25,6 @@ class CreateActivity : AppCompatActivity() {
     private lateinit var viewModel: CreateViewModel
 
     companion object {
-        const val REQUEST_CODE = 0
         const val POSITION = "position"
         const val WEEK_TYPE = "weekType"
         const val DAY = "day"
@@ -138,7 +136,7 @@ class CreateActivity : AppCompatActivity() {
     private fun showTimePicker(textView: TextView) {
         val hour: Int
         val minutes: Int
-        if (textView.text.isDigitsOnly()) {
+        if (viewModel.validateTime(textView.text.toString())) {
             val time = textView.text.toString()
             hour = TimeChecker.getHours(time).toInt()
             minutes = TimeChecker.getMinutes(time).toInt()
