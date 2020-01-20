@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.TimePicker
@@ -14,6 +15,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.fevgenson.timetable.R
+import com.fevgenson.timetable.fragment.DialogListFragment
 import com.fevgenson.timetable.room.entity.Lesson
 import com.fevgenson.timetable.time.TimeChecker
 import com.fevgenson.timetable.viewmodel.CreateViewModel
@@ -51,6 +53,26 @@ class CreateActivity : AppCompatActivity() {
         viewModel.layoutError.observe(this, Observer { showError(it) })
         viewModel.toastError.observe(this, Observer { showErrorToast(it) })
         viewModel.finish.observe(this, Observer { finish() })
+        viewModel.names.observe(
+            this,
+            Observer { showOrHideListButton(nameLayout, it.size, DialogListFragment.NAME) })
+        viewModel.teachers.observe(
+            this,
+            Observer { showOrHideListButton(teacherLayout, it.size, DialogListFragment.TEACHER) })
+        viewModel.buildings.observe(
+            this,
+            Observer { showOrHideListButton(buildingLayout, it.size, DialogListFragment.BUILDING) })
+        viewModel.classrooms.observe(
+            this,
+            Observer {
+                showOrHideListButton(classroomLayout, it.size, DialogListFragment.CLASSROOM)
+            })
+        viewModel.types.observe(
+            this,
+            Observer { showOrHideListButton(typeLayout, it.size, DialogListFragment.TYPE) })
+        viewModel.times.observe(
+            this,
+            Observer { showOrHideListButton(timeListTextView, it.size, DialogListFragment.TIME) })
         //OnClickListeners
         saveFloatingActionButton.setOnClickListener {
             viewModel.save(
@@ -153,5 +175,19 @@ class CreateActivity : AppCompatActivity() {
             minutes,
             true
         ).show()
+    }
+
+    private fun showOrHideListButton(button: View, size: Int, type: Int) {
+        if (size == 0) {
+            button.visibility = View.INVISIBLE
+            return
+        }
+    }
+
+    private fun showOrHideListButton(buttonLayout: TextInputLayout, size: Int, type: Int) {
+        if (size == 0) {
+            buttonLayout.isEndIconVisible = false
+            return
+        }
     }
 }

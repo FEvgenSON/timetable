@@ -4,27 +4,66 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.fevgenson.timetable.R
 import com.fevgenson.timetable.room.DBHolder
-import com.fevgenson.timetable.room.entity.Lesson
-import io.reactivex.disposables.Disposable
+import com.fevgenson.timetable.room.entity.*
+import io.reactivex.Completable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 class CreateViewModel(weekType: Int, day: Int, private val position: Int) :
     ViewModel() {
     val lesson = MutableLiveData<Lesson>()
+    val names = MutableLiveData<List<Name>>()
+    val teachers = MutableLiveData<List<Teacher>>()
+    val buildings = MutableLiveData<List<Building>>()
+    val classrooms = MutableLiveData<List<Classroom>>()
+    val types = MutableLiveData<List<Type>>()
+    val times = MutableLiveData<List<Time>>()
     val toastError = MutableLiveData<Int>()
     val layoutError = MutableLiveData<Int>()
     val finish = MutableLiveData<Boolean>()
-    private var disposable: Disposable? = null
+    private var disposable = CompositeDisposable()
 
     init {
+        val dao = DBHolder.database.lessonDao()
         if (position == -1) {
             lesson.value = Lesson(weekType = weekType, day = day)
         } else {
-            disposable = DBHolder.database.lessonDao().getLessons(weekType, day)
-                .subscribe {
-                    lesson.value = it[position]
-                    disposable?.dispose()
-                }
+            disposable.add(dao.getLessons(weekType, day)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { lesson.value = it[position] }
+            )
         }
+        disposable.add(
+            dao.getAllName().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ names.value = it }, {})
+        )
+        disposable.add(
+            dao.getAllTeacher().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ teachers.value = it }, {})
+        )
+        disposable.add(
+            dao.getAllBuilding().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ buildings.value = it }, {})
+        )
+        disposable.add(
+            dao.getAllClassroom().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ classrooms.value = it }, {})
+        )
+        disposable.add(
+            dao.getAllType().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ types.value = it }, {})
+        )
+        disposable.add(
+            dao.getAllTime().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ times.value = it }, {})
+        )
     }
 
     fun save(
@@ -74,9 +113,13 @@ class CreateViewModel(weekType: Int, day: Int, private val position: Int) :
         savableLesson.type = type
         savableLesson.time = "$startTime-$endTime"
         if (position == -1) {
-            DBHolder.database.lessonDao().insertLessonAndColumns(savableLesson)
+            Completable.fromRunnable {
+                DBHolder.database.lessonDao().insertLessonAndColumns(savableLesson)
+            }.subscribeOn(Schedulers.io()).subscribe()
         } else {
-            DBHolder.database.lessonDao().updateLessonAndColumns(savableLesson)
+            Completable.fromRunnable {
+                DBHolder.database.lessonDao().updateLessonAndColumns(savableLesson)
+            }.subscribeOn(Schedulers.io()).subscribe()
         }
         finish.value = true
     }
@@ -87,6 +130,6 @@ class CreateViewModel(weekType: Int, day: Int, private val position: Int) :
 
     override fun onCleared() {
         super.onCleared()
-        disposable = null
+        disposable.dispose()
     }
 }
