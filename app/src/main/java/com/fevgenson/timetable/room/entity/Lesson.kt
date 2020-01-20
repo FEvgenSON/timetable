@@ -45,11 +45,17 @@ import androidx.room.ForeignKey.CASCADE
 data class Lesson(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
+    @ColumnInfo(index = true)
     var name: String = "",
+    @ColumnInfo(index = true)
     var teacher: String = "",
+    @ColumnInfo(index = true)
     var building: String = "",
+    @ColumnInfo(index = true)
     var classroom: String = "",
+    @ColumnInfo(index = true)
     var type: String = "",
+    @ColumnInfo(index = true)
     var time: String = "",
     @ColumnInfo(index = true)
     var weekType: Int = 0,
