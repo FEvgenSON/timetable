@@ -31,6 +31,8 @@ class TimetableFragment : Fragment() {
 
     private fun startCreateActivity() {
         val intent = Intent(activity, CreateActivity::class.java)
+        intent.putExtra(CreateActivity.DAY, 0)
+        intent.putExtra(CreateActivity.WEEK_TYPE, 0)
         startActivity(intent)
     }
 }

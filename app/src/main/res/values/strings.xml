@@ -5,6 +5,21 @@
     <string name="vocabulary">Словарь</string>
     <string name="settings">Настройки</string>
 
+    <string-array name="weeks">
+        <item>Первая</item>
+        <item>Вторая</item>
+    </string-array>
+
+    <string-array name="days">
+        <item>Понедельник</item>
+        <item>Вторник</item>
+        <item>Среда</item>
+        <item>Четверг</item>
+        <item>Пятница</item>
+        <item>Суббота</item>
+        <item>Воскресенье</item>
+    </string-array>
+
     <string name="name">Название</string>
     <string name="teacher">Преподаватель</string>
     <string name="building">Корпус</string>
@@ -14,6 +29,8 @@
     <string name="type">Тип</string>
     <string name="set_time">Выберите время</string>
     <string name="set">Назначить</string>
+    <string name="week">Неделя</string>
+    <string name="day">День</string>
 
     <string name="create">Создание</string>
     <string name="edit">Редактирование</string>
@@ -30,4 +47,6 @@
     <string name="choose_classroom">Выберите аудиторию</string>
     <string name="choose_type">Выберите тип</string>
     <string name="choose_time">Выберите время</string>
+    <string name="choose_week">Выберите неделю</string>
+    <string name="choose_day">Выберите день</string>
 </resources>

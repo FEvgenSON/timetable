@@ -53,6 +53,7 @@ class CreateActivity : AppCompatActivity() {
         viewModel.layoutError.observe(this, Observer { showError(it) })
         viewModel.toastError.observe(this, Observer { showErrorToast(it) })
         viewModel.finish.observe(this, Observer { finish() })
+        //lists
         viewModel.names.observe(
             this,
             Observer { showOrHideListButton(nameLayout, it.size, DialogListFragment.NAME) })
@@ -73,6 +74,8 @@ class CreateActivity : AppCompatActivity() {
         viewModel.times.observe(
             this,
             Observer { showOrHideListButton(timeListTextView, it.size, DialogListFragment.TIME) })
+        showOrHideListButton(weekTextView, 2, DialogListFragment.WEEK)
+        showOrHideListButton(dayTextView, 7, DialogListFragment.DAY)
         //OnClickListeners
         saveFloatingActionButton.setOnClickListener {
             viewModel.save(
@@ -82,7 +85,9 @@ class CreateActivity : AppCompatActivity() {
                 classroom = classroomEditText.text.toString(),
                 type = typeEditText.text.toString(),
                 startTime = startTimeTextView.text.toString(),
-                endTime = endTimeTextView.text.toString()
+                endTime = endTimeTextView.text.toString(),
+                weekType = resources.getStringArray(R.array.weeks).indexOf(weekTextView.text),
+                day = resources.getStringArray(R.array.days).indexOf(dayTextView.text)
             )
         }
         startTimeTextView.setOnClickListener { showTimePicker(it as TextView) }
@@ -121,6 +126,8 @@ class CreateActivity : AppCompatActivity() {
     private fun showLesson(lesson: Lesson) {
         if (lesson.time.isBlank()) {
             supportActionBar?.setTitle(R.string.create)
+            weekTextView.text = resources.getStringArray(R.array.weeks)[lesson.weekType]
+            dayTextView.text = resources.getStringArray(R.array.days)[lesson.day]
             return
         }
         supportActionBar?.setTitle(R.string.edit)
@@ -177,17 +184,23 @@ class CreateActivity : AppCompatActivity() {
         ).show()
     }
 
-    private fun showOrHideListButton(button: View, size: Int, type: Int) {
+    private fun showOrHideListButton(button: TextView, size: Int, type: Int) {
         if (size == 0) {
             button.visibility = View.INVISIBLE
             return
         }
+        val saveFunc: (result: String) -> Unit =
+            if (type == DialogListFragment.TIME) {
+                {
+                    startTimeTextView.text = TimeChecker.getFirstTime(it)
+                    endTimeTextView.text = TimeChecker.getSecondTime(it)
+                }
+            } else {
+                { button.text = it }
+            }
         button.setOnClickListener {
             val fragment = DialogListFragment.newInstance(type)
-            fragment.resultListener = {
-                startTimeTextView.text = TimeChecker.getFirstTime(it)
-                endTimeTextView.text = TimeChecker.getSecondTime(it)
-            }
+            fragment.resultListener = saveFunc
             fragment.show(supportFragmentManager, "")
         }
     }

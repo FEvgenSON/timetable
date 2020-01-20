@@ -74,6 +74,14 @@ class DialogListFragment : DialogFragment() {
                 listName.setText(R.string.choose_time)
                 initList(viewModel.times.value!!.map { it.name })
             }
+            WEEK -> {
+                listName.setText(R.string.choose_week)
+                initList(resources.getStringArray(R.array.weeks).toList())
+            }
+            DAY -> {
+                listName.setText(R.string.choose_day)
+                initList(resources.getStringArray(R.array.days).toList())
+            }
         }
     }
 

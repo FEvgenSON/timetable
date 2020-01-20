@@ -73,7 +73,9 @@ class CreateViewModel(weekType: Int, day: Int, private val position: Int) :
         classroom: String,
         type: String,
         startTime: String,
-        endTime: String
+        endTime: String,
+        weekType: Int,
+        day: Int
     ) {
         //validate
         if (name.isBlank()) {
@@ -112,6 +114,8 @@ class CreateViewModel(weekType: Int, day: Int, private val position: Int) :
         savableLesson.classroom = classroom
         savableLesson.type = type
         savableLesson.time = "$startTime-$endTime"
+        savableLesson.weekType = weekType
+        savableLesson.day = day
         if (position == -1) {
             Completable.fromRunnable {
                 DBHolder.database.lessonDao().insertLessonAndColumns(savableLesson)
