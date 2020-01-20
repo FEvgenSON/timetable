@@ -15,25 +15,43 @@ abstract class LessonDao {
     @Query("SELECT name from name")
     abstract fun getNameWithLessons(): Flowable<List<NameWithLessons>>
 
+    @Query("SELECT * FROM name")
+    abstract fun getAllName(): List<Name>
+
     @Transaction
     @Query("SELECT name from teacher")
     abstract fun getTeacherWithLessons(): Flowable<List<TeacherWithLessons>>
+
+    @Query("SELECT * FROM teacher")
+    abstract fun getAllTeacher(): List<Teacher>
 
     @Transaction
     @Query("SELECT name from building")
     abstract fun getBuildingWithLessons(): Flowable<List<BuildingWithLessons>>
 
+    @Query("SELECT * FROM building")
+    abstract fun getAllBuilding(): List<Building>
+
     @Transaction
     @Query("SELECT name from classroom")
     abstract fun getClassroomWithLessons(): Flowable<List<ClassroomWithLessons>>
+
+    @Query("SELECT * FROM classroom")
+    abstract fun getAllClassroom(): List<Classroom>
 
     @Transaction
     @Query("SELECT name from type")
     abstract fun getTypeWithLessons(): Flowable<List<TypeWithLessons>>
 
+    @Query("SELECT * FROM type")
+    abstract fun getAllType(): List<Type>
+
     @Transaction
     @Query("SELECT name from time")
     abstract fun getTimeWithLessons(): Flowable<List<TimeWithLessons>>
+
+    @Query("SELECT * FROM time")
+    abstract fun getAllTime(): List<Time>
 
     @Transaction
     open fun insertLessonAndColumns(lesson: Lesson) {
