@@ -124,10 +124,10 @@ class CreateActivity : AppCompatActivity() {
     }
 
     private fun showLesson(lesson: Lesson) {
+        weekTextView.text = resources.getStringArray(R.array.weeks)[lesson.weekType]
+        dayTextView.text = resources.getStringArray(R.array.days)[lesson.day]
         if (lesson.time.isBlank()) {
             supportActionBar?.setTitle(R.string.create)
-            weekTextView.text = resources.getStringArray(R.array.weeks)[lesson.weekType]
-            dayTextView.text = resources.getStringArray(R.array.days)[lesson.day]
             return
         }
         supportActionBar?.setTitle(R.string.edit)

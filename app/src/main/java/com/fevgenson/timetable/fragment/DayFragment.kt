@@ -1,5 +1,6 @@
 package com.fevgenson.timetable.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fevgenson.timetable.R
+import com.fevgenson.timetable.activity.CreateActivity
 import com.fevgenson.timetable.adapter.LessonRecyclerViewAdapter
 import com.fevgenson.timetable.viewmodel.DayViewModel
 import com.fevgenson.timetable.viewmodel_factory.BaseViewModelFactory
@@ -61,6 +63,7 @@ class DayFragment : Fragment() {
                     DayViewModel(weekType, day)
                 }
             ).get("$weekType$day", DayViewModel::class.java)
+        lessonRecyclerViewAdapter.viewModel = viewModel
         lessonRecyclerViewAdapter.expandedItemsId = viewModel.expandedItemsId
         viewModel.lessons.observe(this, Observer {
             if (it.isNotEmpty()) {
@@ -70,6 +73,20 @@ class DayFragment : Fragment() {
             }
             lessonRecyclerViewAdapter.update(it)
         })
+        viewModel.editablePosition.observe(this, Observer {
+            if (it != null) {
+                startCreateActivity(it)
+                viewModel.editablePosition.value = null
+            }
+        })
+    }
+
+    private fun startCreateActivity(position: Int) {
+        val intent = Intent(activity, CreateActivity::class.java)
+        intent.putExtra(CreateActivity.DAY, viewModel.day)
+        intent.putExtra(CreateActivity.WEEK_TYPE, viewModel.weekType)
+        intent.putExtra(CreateActivity.POSITION, position)
+        startActivity(intent)
     }
 
     override fun onPause() {

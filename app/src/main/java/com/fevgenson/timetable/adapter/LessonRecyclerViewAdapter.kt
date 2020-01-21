@@ -9,11 +9,13 @@ import androidx.transition.TransitionManager
 import com.fevgenson.timetable.R
 import com.fevgenson.timetable.room.entity.Lesson
 import com.fevgenson.timetable.viewholder.LessonViewHolder
+import com.fevgenson.timetable.viewmodel.DayViewModel
 import kotlinx.android.synthetic.main.view_lesson.view.*
 
 class LessonRecyclerViewAdapter : RecyclerView.Adapter<LessonViewHolder>() {
     private var data = listOf<Lesson>()
     var expandedItemsId = mutableListOf<Int>()
+    lateinit var viewModel: DayViewModel
 
     fun update(data: List<Lesson>) {
         val result = DiffUtil.calculateDiff(
@@ -54,6 +56,17 @@ class LessonRecyclerViewAdapter : RecyclerView.Adapter<LessonViewHolder>() {
                 expandedItemsId.add(id)
                 holder.setExpandedPartVisibility(true)
             }
+        }
+        //edit click listener
+        holder.itemView.edit_ex.setOnClickListener {
+            viewModel.edit(holder.adapterPosition)
+        }
+        //delete click listener
+        holder.itemView.delete_ex.setOnClickListener {
+            val position = holder.adapterPosition
+            val id = data[position].id
+            expandedItemsId.remove(id)
+            viewModel.delete(position)
         }
         return holder
     }

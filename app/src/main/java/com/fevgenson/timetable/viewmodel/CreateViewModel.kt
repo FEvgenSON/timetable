@@ -29,9 +29,10 @@ class CreateViewModel(weekType: Int, day: Int, private val position: Int) :
         if (position == -1) {
             lesson.value = Lesson(weekType = weekType, day = day)
         } else {
-            disposable.add(dao.getLessons(weekType, day)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { lesson.value = it[position] }
+            disposable.add(
+                dao.getLessons(weekType, day)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ lesson.value = it[position] }, { /*fix strange error*/ })
             )
         }
         disposable.add(
