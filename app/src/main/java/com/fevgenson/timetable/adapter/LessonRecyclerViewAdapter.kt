@@ -61,6 +61,10 @@ class LessonRecyclerViewAdapter : RecyclerView.Adapter<LessonViewHolder>() {
         holder.itemView.edit_ex.setOnClickListener {
             viewModel.edit(holder.adapterPosition)
         }
+        //copy click listener
+        holder.itemView.copy_ex.setOnClickListener {
+            viewModel.copy(holder.adapterPosition)
+        }
         //delete click listener
         holder.itemView.delete_ex.setOnClickListener {
             val position = holder.adapterPosition

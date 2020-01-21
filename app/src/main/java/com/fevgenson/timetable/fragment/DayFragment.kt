@@ -73,11 +73,21 @@ class DayFragment : Fragment() {
             }
             lessonRecyclerViewAdapter.update(it)
         })
-        viewModel.editablePosition.observe(this, Observer {
+        viewModel.showEditForPosition.observe(this, Observer {
             if (it != null) {
                 startCreateActivity(it)
-                viewModel.editablePosition.value = null
+                viewModel.showEditForPosition.value = null
             }
+        })
+        viewModel.showCopy.observe(this, Observer {
+            if (!it) {
+                return@Observer
+            }
+            val dialog = DialogCopyFragment.newInstance(viewModel.weekType, viewModel.day)
+            dialog.resultListener =
+                { weekType: Int, day: Int -> viewModel.copyDialogResult(weekType, day) }
+            dialog.show(childFragmentManager, "")
+            viewModel.showCopy.value = false
         })
     }
 

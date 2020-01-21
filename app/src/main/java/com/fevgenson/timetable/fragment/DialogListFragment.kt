@@ -47,9 +47,13 @@ class DialogListFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel =
-            ViewModelProviders.of(activity!! as CreateActivity).get(CreateViewModel::class.java)
-        when (arguments?.getInt(FRAGMENT_TYPE)) {
+        val type = arguments?.getInt(FRAGMENT_TYPE)
+        if (type != WEEK && type != DAY) {
+            viewModel =
+                ViewModelProviders.of(activity!! as CreateActivity).get(CreateViewModel::class.java)
+        }
+
+        when (type) {
             NAME -> {
                 listName.setText(R.string.choose_name)
                 initList(viewModel.names.value!!.map { it.name })
