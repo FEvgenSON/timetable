@@ -22,7 +22,7 @@ class CreateViewModel(weekType: Int, day: Int, private val position: Int) :
     val toastError = MutableLiveData<Int>()
     val layoutError = MutableLiveData<Int>()
     val finish = MutableLiveData<Boolean>()
-    private var disposable = CompositeDisposable()
+    private val disposable = CompositeDisposable()
 
     init {
         val dao = DBHolder.database.lessonDao()

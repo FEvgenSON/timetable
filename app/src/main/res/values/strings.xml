@@ -52,4 +52,11 @@
 
     <string name="main_with_additional">%1$s(%2$s)</string>
     <string name="today">%1$s - сегодня</string>
+
+    <string name="no_lesson">Нет занятий</string>
+
+    <string name="arrow">Стрелка</string>
+    <string name="edit_ex">Редактировть</string>
+    <string name="copy_ex">Копировать</string>
+    <string name="delete_ex">Удалить</string>
 </resources>

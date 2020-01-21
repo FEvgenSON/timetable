@@ -15,6 +15,6 @@ class DayStateAdapter(fragment: Fragment, private val weekType: Int) :
     }
 
     override fun createFragment(position: Int): Fragment {
-        return DayFragment.newInstance(weekType, position)
+        return DayFragment.newInstance(position, weekType)
     }
 }
