@@ -10,6 +10,7 @@ import com.fevgenson.timetable.room.entity.Lesson
 import kotlinx.android.synthetic.main.view_lesson.view.*
 
 class LessonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    private var expandedPartVisible = false
 
     init {
         val color = ContextCompat.getColor(
@@ -39,5 +40,25 @@ class LessonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 lesson.classroom
             )
         itemView.lessonTime.text = lesson.time
+    }
+
+    fun setExpandedPartVisibility(visible: Boolean) {
+        if (visible == expandedPartVisible) {
+            return
+        }
+        expandedPartVisible = visible
+        if (visible) {
+            itemView.divider.visibility = View.VISIBLE
+            itemView.edit_ex.visibility = View.VISIBLE
+            itemView.copy_ex.visibility = View.VISIBLE
+            itemView.delete_ex.visibility = View.VISIBLE
+            itemView.arrow.animate().rotation(180f)
+        } else {
+            itemView.divider.visibility = View.GONE
+            itemView.edit_ex.visibility = View.GONE
+            itemView.copy_ex.visibility = View.GONE
+            itemView.delete_ex.visibility = View.GONE
+            itemView.arrow.animate().rotation(0f)
+        }
     }
 }

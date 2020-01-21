@@ -61,6 +61,7 @@ class DayFragment : Fragment() {
                     DayViewModel(weekType, day)
                 }
             ).get("$weekType$day", DayViewModel::class.java)
+        lessonRecyclerViewAdapter.expandedItemsId = viewModel.expandedItemsId
         viewModel.lessons.observe(this, Observer {
             if (it.isNotEmpty()) {
                 noLessonText.visibility = View.INVISIBLE
@@ -69,5 +70,10 @@ class DayFragment : Fragment() {
             }
             lessonRecyclerViewAdapter.update(it)
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.expandedItemsId = lessonRecyclerViewAdapter.expandedItemsId
     }
 }

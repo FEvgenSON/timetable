@@ -9,6 +9,7 @@ import io.reactivex.disposables.CompositeDisposable
 
 class DayViewModel(private val weekType: Int, private val day: Int) : ViewModel() {
     val lessons = MutableLiveData<List<Lesson>>()
+    var expandedItemsId = mutableListOf<Int>()
     private val disposable = CompositeDisposable()
 
     init {
