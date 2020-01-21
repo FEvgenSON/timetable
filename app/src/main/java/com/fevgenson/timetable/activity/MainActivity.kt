@@ -21,7 +21,9 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(mainActivityToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         //load default fragment
-        loadFragment(TimetableFragment())
+        if (savedInstanceState == null) {
+            loadFragment(TimetableFragment())
+        }
     }
 
     private fun loadFragment(fragment: Fragment) {

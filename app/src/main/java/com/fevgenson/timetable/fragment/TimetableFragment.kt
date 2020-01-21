@@ -49,9 +49,8 @@ class TimetableFragment : Fragment() {
                 tab.text = weekTabTitles[position]
             }
         }.attach()
-        //select today
-        weekTabs.getTabAt(TimeChecker.currentWeekType)?.select()
-        dayTabs.getTabAt(TimeChecker.currentDay)?.select()
+        //restore select
+        weekTabs.getTabAt(viewModel.savedSelectedWeekType)?.select()
         weekTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }
@@ -69,6 +68,12 @@ class TimetableFragment : Fragment() {
                 }
             }
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.savedSelectedWeekType = weekTabs.selectedTabPosition
+        viewModel.savedSelectedDayType = dayTabs.selectedTabPosition
     }
 
     private fun startCreateActivity() {
