@@ -92,8 +92,8 @@ class DialogListFragment : DialogFragment() {
     private fun initList(list: List<String>) {
         this.list.adapter = ArrayAdapter(activity!!, android.R.layout.simple_list_item_1, list)
         this.list.onItemClickListener =
-            AdapterView.OnItemClickListener { parent, view, position, id ->
-                resultListener!!(list[position])
+            AdapterView.OnItemClickListener { _, _, position, _ ->
+                resultListener?.invoke(list[position])
                 resultListener = null
                 dismiss()
             }

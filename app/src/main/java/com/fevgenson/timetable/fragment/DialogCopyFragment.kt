@@ -10,7 +10,7 @@ import com.fevgenson.timetable.R
 import kotlinx.android.synthetic.main.fragment_dialog_copy.*
 
 class DialogCopyFragment : DialogFragment() {
-    lateinit var resultListener: ((weekType: Int, day: Int) -> Unit)
+    var resultListener: ((weekType: Int, day: Int) -> Unit)? = null
 
     companion object {
         private const val WEEK = "week"
@@ -43,10 +43,14 @@ class DialogCopyFragment : DialogFragment() {
         weekTextView.setOnClickListener { startDialog(it as TextView, DialogListFragment.WEEK) }
         dayTextView.setOnClickListener { startDialog(it as TextView, DialogListFragment.DAY) }
         copyButton.setOnClickListener {
-            resultListener.invoke(weeks.indexOf(weekTextView.text), days.indexOf(dayTextView.text))
+            resultListener?.invoke(weeks.indexOf(weekTextView.text), days.indexOf(dayTextView.text))
+            resultListener = null
             dismiss()
         }
-        cancelButton.setOnClickListener { dismiss() }
+        cancelButton.setOnClickListener {
+            resultListener = null
+            dismiss()
+        }
     }
 
     private fun startDialog(textView: TextView, type: Int) {
