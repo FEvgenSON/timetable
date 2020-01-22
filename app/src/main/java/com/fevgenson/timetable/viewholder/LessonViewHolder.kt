@@ -36,8 +36,8 @@ class LessonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemView.lessonPlace.text =
             itemView.context.getString(
                 R.string.main_with_additional,
-                lesson.building,
-                lesson.classroom
+                lesson.classroom,
+                lesson.building
             )
         itemView.lessonTime.text = lesson.time
     }
