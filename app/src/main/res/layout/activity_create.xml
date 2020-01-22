@@ -119,6 +119,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
+                    android:padding="5dp"
                     android:text="@string/start"
                     android:textSize="18sp" />
 
@@ -127,11 +128,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="end"
-                    android:background="?selectableItemBackground"
+                    android:background="@drawable/button_background"
                     android:clickable="true"
                     android:focusable="true"
                     android:freezesText="true"
                     android:text="@string/set"
+                    android:textColor="?colorControlHighlight"
                     android:textSize="18sp" />
             </FrameLayout>
 
@@ -144,6 +146,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
+                    android:padding="5dp"
                     android:text="@string/end"
                     android:textSize="18sp" />
 
@@ -152,11 +155,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="end"
-                    android:background="?selectableItemBackground"
+                    android:background="@drawable/button_background"
                     android:clickable="true"
                     android:focusable="true"
                     android:freezesText="true"
                     android:text="@string/set"
+                    android:textColor="?colorControlHighlight"
                     android:textSize="18sp" />
             </FrameLayout>
 
@@ -165,11 +169,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="?selectableItemBackground"
+                android:background="@drawable/button_background"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
                 android:text="@string/set_time"
+                android:textColor="?colorControlHighlight"
                 android:textSize="18sp" />
 
             <FrameLayout
@@ -181,6 +186,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
+                    android:padding="5dp"
                     android:text="@string/week"
                     android:textSize="18sp" />
 
@@ -189,11 +195,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="end"
-                    android:background="?selectableItemBackground"
+                    android:background="@drawable/button_background"
                     android:clickable="true"
                     android:focusable="true"
                     android:freezesText="true"
                     android:text="@string/set"
+                    android:textColor="?colorControlHighlight"
                     android:textSize="18sp" />
             </FrameLayout>
 
@@ -206,6 +213,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
+                    android:padding="5dp"
                     android:text="@string/day"
                     android:textSize="18sp" />
 
@@ -214,11 +222,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="end"
-                    android:background="?selectableItemBackground"
+                    android:background="@drawable/button_background"
                     android:clickable="true"
                     android:focusable="true"
                     android:freezesText="true"
                     android:text="@string/set"
+                    android:textColor="?colorControlHighlight"
                     android:textSize="18sp" />
             </FrameLayout>
         </LinearLayout>

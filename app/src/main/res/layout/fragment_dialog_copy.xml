@@ -17,12 +17,13 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp">
+        android:layout_marginTop="35dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
+            android:padding="5dp"
             android:text="@string/week"
             android:textSize="18sp" />
 
@@ -31,23 +32,25 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="end"
-            android:background="?selectableItemBackground"
+            android:background="@drawable/button_background"
             android:clickable="true"
             android:focusable="true"
             android:freezesText="true"
             android:text="@string/set"
+            android:textColor="?colorControlHighlight"
             android:textSize="18sp" />
     </FrameLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp">
+        android:layout_marginTop="10dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
+            android:padding="5dp"
             android:text="@string/day"
             android:textSize="18sp" />
 
@@ -56,11 +59,12 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="end"
-            android:background="?selectableItemBackground"
+            android:background="@drawable/button_background"
             android:clickable="true"
             android:focusable="true"
             android:freezesText="true"
             android:text="@string/set"
+            android:textColor="?colorControlHighlight"
             android:textSize="18sp" />
     </FrameLayout>
 
@@ -74,8 +78,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:background="@drawable/button_background"
+            android:backgroundTint="?colorControlHighlight"
             android:padding="10dp"
-            android:text="@string/copy_ex" />
+            android:text="@string/copy_ex"
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/cancelButton"
@@ -83,8 +90,10 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/copyButton"
             android:layout_toStartOf="@id/copyButton"
+            android:background="@drawable/button_background"
             android:padding="5dp"
-            android:text="@string/cancel" />
+            android:text="@string/cancel"
+            android:textColor="@android:color/darker_gray" />
     </RelativeLayout>
 
 
