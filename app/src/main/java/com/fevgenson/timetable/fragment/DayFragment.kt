@@ -44,12 +44,17 @@ class DayFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecyclerView()
         initViewModel()
+        initRecyclerView()
+        initViewModelListeners()
     }
 
     private fun initRecyclerView() {
         lessonRecyclerViewAdapter = LessonRecyclerViewAdapter()
+        lessonRecyclerViewAdapter.expandedItemsId = viewModel.expandedItemsId
+        lessonRecyclerViewAdapter.editClickListener = { startCreateActivity(it) }
+        lessonRecyclerViewAdapter.copyClickListener = { startCopyDialog(it) }
+        lessonRecyclerViewAdapter.deleteClickListener = { viewModel.delete(it) }
         lessonRecyclerView.adapter = lessonRecyclerViewAdapter
         lessonRecyclerView.layoutManager = LinearLayoutManager(activity)
     }
@@ -63,8 +68,9 @@ class DayFragment : Fragment() {
                     DayViewModel(weekType, day)
                 }
             ).get("$weekType$day", DayViewModel::class.java)
-        lessonRecyclerViewAdapter.viewModel = viewModel
-        lessonRecyclerViewAdapter.expandedItemsId = viewModel.expandedItemsId
+    }
+
+    private fun initViewModelListeners() {
         viewModel.lessons.observe(this, Observer {
             if (it.isNotEmpty()) {
                 noLessonText.visibility = View.INVISIBLE
@@ -73,30 +79,21 @@ class DayFragment : Fragment() {
             }
             lessonRecyclerViewAdapter.update(it)
         })
-        viewModel.showEditForPosition.observe(this, Observer {
-            if (it != null) {
-                startCreateActivity(it)
-                viewModel.showEditForPosition.value = null
-            }
-        })
-        viewModel.showCopy.observe(this, Observer {
-            if (!it) {
-                return@Observer
-            }
-            val dialog = DialogCopyFragment.newInstance(viewModel.weekType, viewModel.day)
-            dialog.resultListener =
-                { weekType: Int, day: Int -> viewModel.copyDialogResult(weekType, day) }
-            dialog.show(childFragmentManager, "")
-            viewModel.showCopy.value = false
-        })
     }
 
-    private fun startCreateActivity(position: Int) {
+    private fun startCreateActivity(id: Int) {
         val intent = Intent(activity, CreateActivity::class.java)
         intent.putExtra(CreateActivity.DAY, viewModel.day)
         intent.putExtra(CreateActivity.WEEK_TYPE, viewModel.weekType)
-        intent.putExtra(CreateActivity.POSITION, position)
+        intent.putExtra(CreateActivity.ID, id)
         startActivity(intent)
+    }
+
+    private fun startCopyDialog(position: Int) {
+        val dialog = DialogCopyFragment.newInstance(viewModel.weekType, viewModel.day)
+        dialog.resultListener =
+            { weekType: Int, day: Int -> viewModel.copyDialogResult(weekType, day, position) }
+        dialog.show(childFragmentManager, "")
     }
 
     override fun onPause() {

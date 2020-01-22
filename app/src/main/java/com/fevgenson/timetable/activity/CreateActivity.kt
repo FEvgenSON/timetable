@@ -24,7 +24,7 @@ class CreateActivity : AppCompatActivity() {
     private lateinit var viewModel: CreateViewModel
 
     companion object {
-        const val POSITION = "position"
+        const val ID = "id"
         const val WEEK_TYPE = "weekType"
         const val DAY = "day"
     }
@@ -42,7 +42,7 @@ class CreateActivity : AppCompatActivity() {
                     CreateViewModel(
                         intent.getIntExtra(WEEK_TYPE, -1),
                         intent.getIntExtra(DAY, -1),
-                        intent.getIntExtra(POSITION, -1)
+                        intent.getIntExtra(ID, -1)
                     )
                 }
             ).get(CreateViewModel::class.java)

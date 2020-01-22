@@ -13,6 +13,10 @@ abstract class LessonDao {
     abstract fun getLessons(weekType: Int, day: Int): Flowable<List<Lesson>>
 
     @Transaction
+    @Query("SELECT * FROM lesson WHERE weekType == :weekType AND day == :day AND id == :id")
+    abstract fun getLesson(weekType: Int, day: Int, id: Int): Single<Lesson>
+
+    @Transaction
     @Query("SELECT name from name")
     abstract fun getNameWithLessons(): Flowable<List<NameWithLessons>>
 

@@ -10,7 +10,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class CreateViewModel(var weekType: Int, var day: Int, private val position: Int) :
+class CreateViewModel(var weekType: Int, var day: Int, private val id: Int) :
     ViewModel() {
     val lesson = MutableLiveData<Lesson>()
     val names = MutableLiveData<List<Name>>()
@@ -26,13 +26,14 @@ class CreateViewModel(var weekType: Int, var day: Int, private val position: Int
 
     init {
         val dao = DBHolder.database.lessonDao()
-        if (position == -1) {
+        if (id == -1) {
             lesson.value = Lesson(weekType = weekType, day = day)
         } else {
             disposable.add(
-                dao.getLessons(weekType, day)
+                dao.getLesson(weekType, day, id)
+                    .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ lesson.value = it[position] }, { /*fix strange error*/ })
+                    .subscribe({ lesson.value = it }, { it.printStackTrace() })
             )
         }
         disposable.add(
@@ -115,7 +116,7 @@ class CreateViewModel(var weekType: Int, var day: Int, private val position: Int
         savableLesson.time = "$startTime-$endTime"
         savableLesson.weekType = weekType
         savableLesson.day = day
-        if (position == -1) {
+        if (id == -1) {
             Completable.fromRunnable {
                 DBHolder.database.lessonDao().insertLessonAndColumns(savableLesson)
             }.subscribeOn(Schedulers.io()).subscribe()

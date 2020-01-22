@@ -9,13 +9,14 @@ import androidx.transition.TransitionManager
 import com.fevgenson.timetable.R
 import com.fevgenson.timetable.room.entity.Lesson
 import com.fevgenson.timetable.viewholder.LessonViewHolder
-import com.fevgenson.timetable.viewmodel.DayViewModel
 import kotlinx.android.synthetic.main.view_lesson.view.*
 
 class LessonRecyclerViewAdapter : RecyclerView.Adapter<LessonViewHolder>() {
     private var data = listOf<Lesson>()
     var expandedItemsId = mutableListOf<Int>()
-    lateinit var viewModel: DayViewModel
+    var editClickListener: ((id: Int) -> Unit)? = null
+    var copyClickListener: ((position: Int) -> Unit)? = null
+    var deleteClickListener: ((position: Int) -> Unit)? = null
 
     fun update(data: List<Lesson>) {
         val result = DiffUtil.calculateDiff(
@@ -32,7 +33,7 @@ class LessonRecyclerViewAdapter : RecyclerView.Adapter<LessonViewHolder>() {
                     oldItemPosition: Int,
                     newItemPosition: Int
                 ) = true
-            }
+            }, true
         )
         this.data = data
         result.dispatchUpdatesTo(this)
@@ -59,18 +60,18 @@ class LessonRecyclerViewAdapter : RecyclerView.Adapter<LessonViewHolder>() {
         }
         //edit click listener
         holder.itemView.edit_ex.setOnClickListener {
-            viewModel.edit(holder.adapterPosition)
+            editClickListener?.invoke(data[holder.adapterPosition].id)
         }
         //copy click listener
         holder.itemView.copy_ex.setOnClickListener {
-            viewModel.copy(holder.adapterPosition)
+            copyClickListener?.invoke(holder.adapterPosition)
         }
         //delete click listener
         holder.itemView.delete_ex.setOnClickListener {
             val position = holder.adapterPosition
             val id = data[position].id
             expandedItemsId.remove(id)
-            viewModel.delete(position)
+            deleteClickListener?.invoke(holder.adapterPosition)
         }
         return holder
     }
