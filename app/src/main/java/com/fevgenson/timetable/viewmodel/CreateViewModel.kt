@@ -10,7 +10,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class CreateViewModel(weekType: Int, day: Int, private val position: Int) :
+class CreateViewModel(var weekType: Int, var day: Int, private val position: Int) :
     ViewModel() {
     val lesson = MutableLiveData<Lesson>()
     val names = MutableLiveData<List<Name>>()
@@ -74,9 +74,7 @@ class CreateViewModel(weekType: Int, day: Int, private val position: Int) :
         classroom: String,
         type: String,
         startTime: String,
-        endTime: String,
-        weekType: Int,
-        day: Int
+        endTime: String
     ) {
         //validate
         if (name.isBlank()) {

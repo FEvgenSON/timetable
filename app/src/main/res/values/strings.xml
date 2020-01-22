@@ -41,14 +41,10 @@
     <string name="empty_time_error">Время не может быть пустым</string>
     <string name="value_time_error">Время окночания должно быть позже времени начала</string>
 
-    <string name="choose_name">Выберите название</string>
-    <string name="choose_teacher">Выберите преподавателя</string>
-    <string name="choose_building">Выберите корпус</string>
-    <string name="choose_classroom">Выберите аудиторию</string>
-    <string name="choose_type">Выберите тип</string>
     <string name="choose_time">Выберите время</string>
     <string name="choose_week">Выберите неделю</string>
     <string name="choose_day">Выберите день</string>
+    <string name="list_empty">Список пуст</string>
 
     <string name="main_with_additional">%1$s(%2$s)</string>
     <string name="today">%1$s - сегодня</string>

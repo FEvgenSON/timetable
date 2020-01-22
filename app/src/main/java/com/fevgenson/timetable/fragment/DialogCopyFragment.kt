@@ -11,6 +11,8 @@ import kotlinx.android.synthetic.main.fragment_dialog_copy.*
 
 class DialogCopyFragment : DialogFragment() {
     var resultListener: ((weekType: Int, day: Int) -> Unit)? = null
+    var day = -1
+    var weekType = -1
 
     companion object {
         private const val WEEK = "week"
@@ -36,14 +38,14 @@ class DialogCopyFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val weeks = resources.getStringArray(R.array.weeks)
-        val days = resources.getStringArray(R.array.days)
-        weekTextView.text = weeks[arguments!!.getInt(WEEK)]
-        dayTextView.text = days[arguments!!.getInt(DAY)]
+        day = arguments!!.getInt(DAY)
+        weekType = arguments!!.getInt(WEEK)
+        weekTextView.text = resources.getStringArray(R.array.weeks)[weekType]
+        dayTextView.text = resources.getStringArray(R.array.days)[day]
         weekTextView.setOnClickListener { startDialog(it as TextView, DialogListFragment.WEEK) }
         dayTextView.setOnClickListener { startDialog(it as TextView, DialogListFragment.DAY) }
         copyButton.setOnClickListener {
-            resultListener?.invoke(weeks.indexOf(weekTextView.text), days.indexOf(dayTextView.text))
+            resultListener?.invoke(weekType, day)
             resultListener = null
             dismiss()
         }
@@ -55,7 +57,14 @@ class DialogCopyFragment : DialogFragment() {
 
     private fun startDialog(textView: TextView, type: Int) {
         val dialog = DialogListFragment.newInstance(type)
-        dialog.resultListener = { textView.text = it }
+        dialog.resultListener = { result, position ->
+            textView.text = result
+            if (type == DialogListFragment.DAY) {
+                day = position
+            } else {
+                weekType = position
+            }
+        }
         dialog.show(fragmentManager!!, "")
     }
 }

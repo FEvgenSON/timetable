@@ -5,11 +5,8 @@ import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.TextView
-import android.widget.TimePicker
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
@@ -56,26 +53,30 @@ class CreateActivity : AppCompatActivity() {
         //lists
         viewModel.names.observe(
             this,
-            Observer { showOrHideListButton(nameLayout, it.size, DialogListFragment.NAME) })
+            Observer { list -> setAutoCompleteAdapter(nameEditText, list.map { it.name }) })
         viewModel.teachers.observe(
             this,
-            Observer { showOrHideListButton(teacherLayout, it.size, DialogListFragment.TEACHER) })
+            Observer { list -> setAutoCompleteAdapter(teacherEditText, list.map { it.name }) })
         viewModel.buildings.observe(
             this,
-            Observer { showOrHideListButton(buildingLayout, it.size, DialogListFragment.BUILDING) })
+            Observer { list -> setAutoCompleteAdapter(buildingEditText, list.map { it.name }) })
         viewModel.classrooms.observe(
             this,
-            Observer {
-                showOrHideListButton(classroomLayout, it.size, DialogListFragment.CLASSROOM)
-            })
+            Observer { list -> setAutoCompleteAdapter(classroomEditText, list.map { it.name }) })
         viewModel.types.observe(
             this,
-            Observer { showOrHideListButton(typeLayout, it.size, DialogListFragment.TYPE) })
+            Observer { list -> setAutoCompleteAdapter(typeEditText, list.map { it.name }) })
         viewModel.times.observe(
             this,
-            Observer { showOrHideListButton(timeListTextView, it.size, DialogListFragment.TIME) })
-        showOrHideListButton(weekTextView, 2, DialogListFragment.WEEK)
-        showOrHideListButton(dayTextView, 7, DialogListFragment.DAY)
+            Observer {
+                setListClickListener(
+                    timeListTextView,
+                    DialogListFragment.TIME,
+                    it.isEmpty()
+                )
+            })
+        setListClickListener(weekTextView, DialogListFragment.WEEK)
+        setListClickListener(dayTextView, DialogListFragment.DAY)
         //OnClickListeners
         saveFloatingActionButton.setOnClickListener {
             viewModel.save(
@@ -85,9 +86,7 @@ class CreateActivity : AppCompatActivity() {
                 classroom = classroomEditText.text.toString(),
                 type = typeEditText.text.toString(),
                 startTime = startTimeTextView.text.toString(),
-                endTime = endTimeTextView.text.toString(),
-                weekType = resources.getStringArray(R.array.weeks).indexOf(weekTextView.text),
-                day = resources.getStringArray(R.array.days).indexOf(dayTextView.text)
+                endTime = endTimeTextView.text.toString()
             )
         }
         startTimeTextView.setOnClickListener { showTimePicker(it as TextView) }
@@ -184,36 +183,35 @@ class CreateActivity : AppCompatActivity() {
         ).show()
     }
 
-    private fun showOrHideListButton(button: TextView, size: Int, type: Int) {
-        if (size == 0) {
-            button.visibility = View.INVISIBLE
-            return
-        }
-        val saveFunc: (result: String) -> Unit =
-            if (type == DialogListFragment.TIME) {
-                {
-                    startTimeTextView.text = TimeChecker.getFirstTime(it)
-                    endTimeTextView.text = TimeChecker.getSecondTime(it)
-                }
-            } else {
-                { button.text = it }
-            }
-        button.setOnClickListener {
-            val fragment = DialogListFragment.newInstance(type)
-            fragment.resultListener = saveFunc
-            fragment.show(supportFragmentManager, "")
-        }
+    private fun setAutoCompleteAdapter(editText: AutoCompleteTextView, text: List<String>) {
+        editText.setAdapter(ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, text))
     }
 
-    private fun showOrHideListButton(buttonLayout: TextInputLayout, size: Int, type: Int) {
-        if (size == 0) {
-            buttonLayout.isEndIconVisible = false
+    private fun setListClickListener(button: TextView, type: Int, empty: Boolean = false) {
+        if (empty) {
+            Toast.makeText(this, R.string.list_empty, Toast.LENGTH_SHORT).show()
             return
         }
-        buttonLayout.setEndIconOnClickListener {
-            val fragment = DialogListFragment.newInstance(type)
-            fragment.resultListener = { buttonLayout.editText?.setText(it) }
-            fragment.show(supportFragmentManager, "")
+        val resultListener: (result: String, position: Int) -> Unit =
+            if (type == DialogListFragment.TIME) {
+                { result, _ ->
+                    startTimeTextView.text = TimeChecker.getFirstTime(result)
+                    endTimeTextView.text = TimeChecker.getSecondTime(result)
+                }
+            } else {
+                { result, position ->
+                    button.text = result
+                    if (type == DialogListFragment.DAY) {
+                        viewModel.day = position
+                    } else {
+                        viewModel.weekType = position
+                    }
+                }
+            }
+        button.setOnClickListener {
+            val dialog = DialogListFragment.newInstance(type)
+            dialog.resultListener = resultListener
+            dialog.show(supportFragmentManager, "")
         }
     }
 }

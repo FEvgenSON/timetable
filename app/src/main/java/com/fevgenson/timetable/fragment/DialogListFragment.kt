@@ -14,18 +14,12 @@ import com.fevgenson.timetable.viewmodel.CreateViewModel
 import kotlinx.android.synthetic.main.fragment_dialog_list.*
 
 class DialogListFragment : DialogFragment() {
-    private lateinit var viewModel: CreateViewModel
-    var resultListener: ((result: String) -> Unit)? = null
+    var resultListener: ((result: String, position: Int) -> Unit)? = null
 
     companion object {
-        const val NAME = 0
-        const val TEACHER = 1
-        const val BUILDING = 2
-        const val CLASSROOM = 3
-        const val TYPE = 4
-        const val TIME = 5
-        const val WEEK = 6
-        const val DAY = 7
+        const val TIME = 0
+        const val WEEK = 1
+        const val DAY = 2
         private const val FRAGMENT_TYPE = "fragmentType"
 
         fun newInstance(type: Int): DialogListFragment {
@@ -48,34 +42,12 @@ class DialogListFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         retainInstance = true
-        val type = arguments?.getInt(FRAGMENT_TYPE)
-        if (type != WEEK && type != DAY) {
-            viewModel =
-                ViewModelProviders.of(activity!! as CreateActivity).get(CreateViewModel::class.java)
-        }
 
-        when (type) {
-            NAME -> {
-                listName.setText(R.string.choose_name)
-                initList(viewModel.names.value!!.map { it.name })
-            }
-            TEACHER -> {
-                listName.setText(R.string.choose_teacher)
-                initList(viewModel.teachers.value!!.map { it.name })
-            }
-            BUILDING -> {
-                listName.setText(R.string.choose_building)
-                initList(viewModel.buildings.value!!.map { it.name })
-            }
-            CLASSROOM -> {
-                listName.setText(R.string.choose_classroom)
-                initList(viewModel.classrooms.value!!.map { it.name })
-            }
-            TYPE -> {
-                listName.setText(R.string.choose_type)
-                initList(viewModel.types.value!!.map { it.name })
-            }
+        when (arguments?.getInt(FRAGMENT_TYPE)) {
             TIME -> {
+                val viewModel =
+                    ViewModelProviders.of(activity!! as CreateActivity)
+                        .get(CreateViewModel::class.java)
                 listName.setText(R.string.choose_time)
                 initList(viewModel.times.value!!.map { it.name })
             }
@@ -94,7 +66,7 @@ class DialogListFragment : DialogFragment() {
         this.list.adapter = ArrayAdapter(activity!!, android.R.layout.simple_list_item_1, list)
         this.list.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
-                resultListener?.invoke(list[position])
+                resultListener?.invoke(list[position], position)
                 resultListener = null
                 dismiss()
             }
