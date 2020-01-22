@@ -59,14 +59,16 @@ class WeekFragment : Fragment() {
             tab.setCustomView(R.layout.view_tab)
             val view = tab.customView!!
             view.tabText.text = dayTabTitles[position]
-            view.date.text = TimeChecker.dates[TimeChecker.currentWeekType][position]
-            val color: Int
-            if (viewModel.savedSelectedDayType == position) {
+            view.date.text = TimeChecker.dates[viewModel.savedSelectedWeekType][position]
+            if (TimeChecker.currentWeekType == viewModel.savedSelectedWeekType && TimeChecker.currentDay == position) {
                 view.todayImg.visibility = View.VISIBLE
-                color = ContextCompat.getColor(activity!!, android.R.color.white)
             } else {
                 view.todayImg.visibility = View.INVISIBLE
-                color = ContextCompat.getColor(activity!!, android.R.color.darker_gray)
+            }
+            val color = if (viewModel.savedSelectedDayType == position) {
+                ContextCompat.getColor(activity!!, android.R.color.white)
+            } else {
+                ContextCompat.getColor(activity!!, android.R.color.darker_gray)
             }
             view.tabText.setTextColor(color)
             view.date.setTextColor(color)

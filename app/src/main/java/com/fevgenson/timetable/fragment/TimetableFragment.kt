@@ -66,13 +66,15 @@ class TimetableFragment : Fragment() {
             tab.setCustomView(R.layout.view_tab)
             val view = tab.customView!!
             view.tabText.text = weekTabTitles[position]
-            val color: Int
-            if (viewModel.savedSelectedWeekType == position) {
+            if (TimeChecker.currentWeekType == position) {
                 view.todayImg.visibility = View.VISIBLE
-                color = ContextCompat.getColor(activity!!, android.R.color.white)
             } else {
                 view.todayImg.visibility = View.INVISIBLE
-                color = ContextCompat.getColor(activity!!, android.R.color.darker_gray)
+            }
+            val color = if (viewModel.savedSelectedWeekType == position) {
+                ContextCompat.getColor(activity!!, android.R.color.white)
+            } else {
+                ContextCompat.getColor(activity!!, android.R.color.darker_gray)
             }
             view.tabText.setTextColor(color)
             view.date.setTextColor(color)
