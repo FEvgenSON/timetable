@@ -47,6 +47,7 @@ class DialogListFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        retainInstance = true
         val type = arguments?.getInt(FRAGMENT_TYPE)
         if (type != WEEK && type != DAY) {
             viewModel =
