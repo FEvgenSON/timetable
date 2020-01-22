@@ -33,7 +33,7 @@ class LessonRecyclerViewAdapter : RecyclerView.Adapter<LessonViewHolder>() {
                     oldItemPosition: Int,
                     newItemPosition: Int
                 ) = true
-            }, true
+            }
         )
         this.data = data
         result.dispatchUpdatesTo(this)
