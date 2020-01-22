@@ -12,12 +12,19 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/weekTabs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.Light.Tabs"
+            app:tabIndicatorColor="?attr/tabIndicatorColor"
+            app:tabTextAppearance="@style/AppTheme.Light.Tabs.TextAppearance" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/dayTabs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.Light.Tabs"
+            app:tabIndicatorColor="?attr/tabIndicatorColor"
+            app:tabMode="scrollable"
+            app:tabTextAppearance="@style/AppTheme.Light.Tabs.TextAppearance" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager2.widget.ViewPager2

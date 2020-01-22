@@ -3,6 +3,7 @@ package com.fevgenson.timetable.room.dao
 import androidx.room.*
 import com.fevgenson.timetable.room.entity.*
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 @Dao
 abstract class LessonDao {
@@ -12,28 +13,50 @@ abstract class LessonDao {
     abstract fun getLessons(weekType: Int, day: Int): Flowable<List<Lesson>>
 
     @Transaction
+    @Query("SELECT * FROM lesson WHERE weekType == :weekType AND day == :day AND id == :id")
+    abstract fun getLesson(weekType: Int, day: Int, id: Int): Single<Lesson>
+
+    @Transaction
     @Query("SELECT name from name")
     abstract fun getNameWithLessons(): Flowable<List<NameWithLessons>>
+
+    @Query("SELECT * FROM name")
+    abstract fun getAllName(): Single<List<Name>>
 
     @Transaction
     @Query("SELECT name from teacher")
     abstract fun getTeacherWithLessons(): Flowable<List<TeacherWithLessons>>
 
+    @Query("SELECT * FROM teacher")
+    abstract fun getAllTeacher(): Single<List<Teacher>>
+
     @Transaction
     @Query("SELECT name from building")
     abstract fun getBuildingWithLessons(): Flowable<List<BuildingWithLessons>>
+
+    @Query("SELECT * FROM building")
+    abstract fun getAllBuilding(): Single<List<Building>>
 
     @Transaction
     @Query("SELECT name from classroom")
     abstract fun getClassroomWithLessons(): Flowable<List<ClassroomWithLessons>>
 
+    @Query("SELECT * FROM classroom")
+    abstract fun getAllClassroom(): Single<List<Classroom>>
+
     @Transaction
     @Query("SELECT name from type")
     abstract fun getTypeWithLessons(): Flowable<List<TypeWithLessons>>
 
+    @Query("SELECT * FROM type")
+    abstract fun getAllType(): Single<List<Type>>
+
     @Transaction
     @Query("SELECT name from time")
     abstract fun getTimeWithLessons(): Flowable<List<TimeWithLessons>>
+
+    @Query("SELECT * FROM time")
+    abstract fun getAllTime(): Single<List<Time>>
 
     @Transaction
     open fun insertLessonAndColumns(lesson: Lesson) {

@@ -4,4 +4,57 @@
     <string name="timetable">Рассписание</string>
     <string name="vocabulary">Словарь</string>
     <string name="settings">Настройки</string>
+
+    <string-array name="weeks">
+        <item>Первая</item>
+        <item>Вторая</item>
+    </string-array>
+
+    <string-array name="days">
+        <item>Понедельник</item>
+        <item>Вторник</item>
+        <item>Среда</item>
+        <item>Четверг</item>
+        <item>Пятница</item>
+        <item>Суббота</item>
+        <item>Воскресенье</item>
+    </string-array>
+
+    <string name="name">Название</string>
+    <string name="teacher">Преподаватель</string>
+    <string name="building">Корпус</string>
+    <string name="classroom">Аудитория</string>
+    <string name="start">Начало</string>
+    <string name="end">Конец</string>
+    <string name="type">Тип</string>
+    <string name="set_time">Выберите время</string>
+    <string name="set">Назначить</string>
+    <string name="week">Неделя</string>
+    <string name="day">День</string>
+
+    <string name="create">Создание</string>
+    <string name="edit">Редактирование</string>
+
+    <string name="clear_fields">Отчистить поля</string>
+
+    <string name="empty_string_error">Поле обязательно к заполнению</string>
+    <string name="empty_time_error">Время не может быть пустым</string>
+    <string name="value_time_error">Время окночания должно быть позже времени начала</string>
+
+    <string name="choose_time">Выберите время</string>
+    <string name="choose_week">Выберите неделю</string>
+    <string name="choose_day">Выберите день</string>
+    <string name="list_empty">Список пуст</string>
+
+    <string name="main_with_additional">%1$s(%2$s)</string>
+    <string name="today">%1$s - сегодня</string>
+
+    <string name="no_lesson">Нет занятий</string>
+
+    <string name="arrow">Стрелка</string>
+    <string name="edit_ex">Редактировть</string>
+    <string name="copy_ex">Копировать</string>
+    <string name="delete_ex">Удалить</string>
+    <string name="cancel">Отмена</string>
+    <string name="where">Куда</string>
 </resources>
