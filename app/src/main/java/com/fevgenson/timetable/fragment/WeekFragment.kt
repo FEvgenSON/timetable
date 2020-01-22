@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.fevgenson.timetable.R
@@ -14,6 +15,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_timetable.*
 import kotlinx.android.synthetic.main.fragment_week.*
+import kotlinx.android.synthetic.main.view_tab.view.*
 
 class WeekFragment : Fragment() {
     private lateinit var viewModel: TimetableViewModel
@@ -54,11 +56,20 @@ class WeekFragment : Fragment() {
             dayViewPager,
             true
         ) { tab: TabLayout.Tab, position: Int ->
-            if (position == TimeChecker.currentDay) {
-                tab.text = getString(R.string.today, dayTabTitles[position])
+            tab.setCustomView(R.layout.view_tab)
+            val view = tab.customView!!
+            view.tabText.text = dayTabTitles[position]
+            view.date.text = TimeChecker.dates[TimeChecker.currentWeekType][position]
+            val color: Int
+            if (viewModel.savedSelectedDayType == position) {
+                view.todayImg.visibility = View.VISIBLE
+                color = ContextCompat.getColor(activity!!, android.R.color.white)
             } else {
-                tab.text = dayTabTitles[position]
+                view.todayImg.visibility = View.INVISIBLE
+                color = ContextCompat.getColor(activity!!, android.R.color.darker_gray)
             }
+            view.tabText.setTextColor(color)
+            view.date.setTextColor(color)
         }.attach()
         //restore select
         (parentFragment as TimetableFragment).dayTabs.getTabAt(viewModel.savedSelectedDayType)

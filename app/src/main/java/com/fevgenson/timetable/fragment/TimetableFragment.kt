@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager2.widget.ViewPager2
@@ -16,9 +17,29 @@ import com.fevgenson.timetable.viewmodel.TimetableViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_timetable.*
+import kotlinx.android.synthetic.main.view_tab.view.*
 
 class TimetableFragment : Fragment() {
     private lateinit var viewModel: TimetableViewModel
+    private val tabColorChanger = object : TabLayout.OnTabSelectedListener {
+        override fun onTabReselected(tab: TabLayout.Tab?) {
+        }
+
+        override fun onTabUnselected(tab: TabLayout.Tab?) {
+            val view = tab?.customView!!
+            val color = ContextCompat.getColor(activity!!, android.R.color.darker_gray)
+            view.tabText.setTextColor(color)
+            view.date.setTextColor(color)
+        }
+
+        override fun onTabSelected(tab: TabLayout.Tab?) {
+            val view = tab?.customView!!
+            val color = ContextCompat.getColor(activity!!, android.R.color.white)
+            view.tabText.setTextColor(color)
+            view.date.setTextColor(color)
+        }
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,16 +62,25 @@ class TimetableFragment : Fragment() {
         weekViewPager.offscreenPageLimit = 2
         weekViewPager.adapter = WeekStateAdapter(this)
         val weekTabTitles = resources.getStringArray(R.array.weeks)
-        val dayTabTitles = resources.getStringArray(R.array.days)
         TabLayoutMediator(weekTabs, weekViewPager, true) { tab: TabLayout.Tab, position: Int ->
-            if (position == TimeChecker.currentWeekType) {
-                tab.text = getString(R.string.today, weekTabTitles[position])
+            tab.setCustomView(R.layout.view_tab)
+            val view = tab.customView!!
+            view.tabText.text = weekTabTitles[position]
+            val color: Int
+            if (viewModel.savedSelectedWeekType == position) {
+                view.todayImg.visibility = View.VISIBLE
+                color = ContextCompat.getColor(activity!!, android.R.color.white)
             } else {
-                tab.text = weekTabTitles[position]
+                view.todayImg.visibility = View.INVISIBLE
+                color = ContextCompat.getColor(activity!!, android.R.color.darker_gray)
             }
+            view.tabText.setTextColor(color)
+            view.date.setTextColor(color)
         }.attach()
         //restore select
         weekTabs.getTabAt(viewModel.savedSelectedWeekType)?.select()
+        weekTabs.addOnTabSelectedListener(tabColorChanger)
+        dayTabs.addOnTabSelectedListener(tabColorChanger)
         weekTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }
@@ -60,11 +90,15 @@ class TimetableFragment : Fragment() {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if (tab?.position == TimeChecker.currentWeekType) {
-                    dayTabs.getTabAt(TimeChecker.currentDay)?.text =
-                        getString(R.string.today, dayTabTitles[TimeChecker.currentDay])
+                    dayTabs.getTabAt(TimeChecker.currentDay)?.customView?.todayImg?.visibility =
+                        View.VISIBLE
                 } else {
-                    dayTabs.getTabAt(TimeChecker.currentDay)?.text =
-                        dayTabTitles[TimeChecker.currentDay]
+                    dayTabs.getTabAt(TimeChecker.currentDay)?.customView?.todayImg?.visibility =
+                        View.GONE
+                }
+                for (i in 0..6) {
+                    dayTabs.getTabAt(i)?.customView?.date?.text =
+                        TimeChecker.dates[tab!!.position][i]
                 }
             }
         })

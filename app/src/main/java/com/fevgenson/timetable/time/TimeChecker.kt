@@ -9,9 +9,28 @@ object TimeChecker {
     var currentWeekType = 0 //init later
         private set
 
+    lateinit var dates: MutableList<MutableList<String>>
+
     fun init() {
         initCurrentDay()
         initWeekType()
+        initDates()
+    }
+
+    private fun initDates() {
+        dates = mutableListOf()
+        dates.add(mutableListOf())
+        dates.add(mutableListOf())
+        val simpleDateFormat = SimpleDateFormat("dd:MM", Locale.US)
+        val calendar = Calendar.getInstance()
+        calendar.time = Date()
+        for (i in 0..6) {
+            calendar.set(Calendar.DAY_OF_WEEK, if (i == 6) Calendar.SUNDAY else i + 2)
+            dates[currentWeekType].add(simpleDateFormat.format(calendar.time))
+            calendar.add(Calendar.WEEK_OF_YEAR, 1)
+            dates[if (currentWeekType == 0) 1 else 0].add(simpleDateFormat.format(calendar.time))
+            calendar.add(Calendar.WEEK_OF_YEAR, -1)
+        }
     }
 
     private fun initCurrentDay() {
