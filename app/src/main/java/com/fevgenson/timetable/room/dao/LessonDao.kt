@@ -17,42 +17,42 @@ abstract class LessonDao {
     abstract fun getLesson(weekType: Int, day: Int, id: Int): Single<Lesson>
 
     @Transaction
-    @Query("SELECT name from name")
+    @Query("SELECT id, name from name")
     abstract fun getNameWithLessons(): Flowable<List<NameWithLessons>>
 
     @Query("SELECT * FROM name")
     abstract fun getAllName(): Single<List<Name>>
 
     @Transaction
-    @Query("SELECT name from teacher")
+    @Query("SELECT id, name from teacher")
     abstract fun getTeacherWithLessons(): Flowable<List<TeacherWithLessons>>
 
     @Query("SELECT * FROM teacher")
     abstract fun getAllTeacher(): Single<List<Teacher>>
 
     @Transaction
-    @Query("SELECT name from building")
+    @Query("SELECT id, name from building")
     abstract fun getBuildingWithLessons(): Flowable<List<BuildingWithLessons>>
 
     @Query("SELECT * FROM building")
     abstract fun getAllBuilding(): Single<List<Building>>
 
     @Transaction
-    @Query("SELECT name from classroom")
+    @Query("SELECT id, name from classroom")
     abstract fun getClassroomWithLessons(): Flowable<List<ClassroomWithLessons>>
 
     @Query("SELECT * FROM classroom")
     abstract fun getAllClassroom(): Single<List<Classroom>>
 
     @Transaction
-    @Query("SELECT name from type")
+    @Query("SELECT id, name from type")
     abstract fun getTypeWithLessons(): Flowable<List<TypeWithLessons>>
 
     @Query("SELECT * FROM type")
     abstract fun getAllType(): Single<List<Type>>
 
     @Transaction
-    @Query("SELECT name from time")
+    @Query("SELECT id, name from time")
     abstract fun getTimeWithLessons(): Flowable<List<TimeWithLessons>>
 
     @Query("SELECT * FROM time")
@@ -60,23 +60,23 @@ abstract class LessonDao {
 
     @Transaction
     open fun insertLessonAndColumns(lesson: Lesson) {
-        insertName(Name(lesson.name))
-        insertTeacher(Teacher(lesson.teacher))
-        insertBuilding(Building(lesson.building))
-        insertClassroom(Classroom(lesson.classroom))
-        insertType(Type(lesson.type))
-        insertTime(Time(lesson.time))
+        insertName(Name(name = lesson.name))
+        insertTeacher(Teacher(name = lesson.teacher))
+        insertBuilding(Building(name = lesson.building))
+        insertClassroom(Classroom(name = lesson.classroom))
+        insertType(Type(name = lesson.type))
+        insertTime(Time(name = lesson.time))
         insertLesson(lesson)
     }
 
     @Transaction
     open fun updateLessonAndColumns(lesson: Lesson) {
-        insertName(Name(lesson.name))
-        insertTeacher(Teacher(lesson.teacher))
-        insertBuilding(Building(lesson.building))
-        insertClassroom(Classroom(lesson.classroom))
-        insertType(Type(lesson.type))
-        insertTime(Time(lesson.time))
+        insertName(Name(name = lesson.name))
+        insertTeacher(Teacher(name = lesson.teacher))
+        insertBuilding(Building(name = lesson.building))
+        insertClassroom(Classroom(name = lesson.classroom))
+        insertType(Type(name = lesson.type))
+        insertTime(Time(name = lesson.time))
         updateLesson(lesson)
     }
 

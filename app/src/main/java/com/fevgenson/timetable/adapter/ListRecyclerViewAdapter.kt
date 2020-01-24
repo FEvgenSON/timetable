@@ -2,6 +2,7 @@ package com.fevgenson.timetable.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
@@ -12,11 +13,29 @@ import kotlinx.android.synthetic.main.view_list_item.view.*
 
 class ListRecyclerViewAdapter : RecyclerView.Adapter<ListViewHolder>() {
     private var data: List<ListWithLessons> = mutableListOf()
-    var expandedItemsId = mutableListOf<String>()
+    var expandedItemsId = mutableListOf<Int>()
+    var editClickListener: ((id: Int) -> Unit)? = null
+    var deleteClickListener: ((position: Int) -> Unit)? = null
 
     fun update(newData: List<ListWithLessons>) {
+        val result = DiffUtil.calculateDiff(
+            object : DiffUtil.Callback() {
+                override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                    return newData[newItemPosition].list == data[oldItemPosition].list
+                }
+
+                override fun getOldListSize() = data.size
+
+                override fun getNewListSize() = newData.size
+
+                override fun areContentsTheSame(
+                    oldItemPosition: Int,
+                    newItemPosition: Int
+                ) = true
+            }
+        )
         data = newData
-        notifyDataSetChanged()
+        result.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
@@ -29,7 +48,7 @@ class ListRecyclerViewAdapter : RecyclerView.Adapter<ListViewHolder>() {
             transition.duration = 200L
             TransitionManager.beginDelayedTransition(parent, transition)
             val position = holder.adapterPosition
-            val id = data[position].list
+            val id = data[position].id
             if (expandedItemsId.contains(id)) {
                 expandedItemsId.remove(id)
                 holder.setExpandedPartVisibility(false)
@@ -37,6 +56,17 @@ class ListRecyclerViewAdapter : RecyclerView.Adapter<ListViewHolder>() {
                 expandedItemsId.add(id)
                 holder.setExpandedPartVisibility(true)
             }
+        }
+        //edit click listener
+        holder.itemView.edit_ex.setOnClickListener {
+            editClickListener?.invoke(data[holder.adapterPosition].id)
+        }
+        //delete click listener
+        holder.itemView.delete_ex.setOnClickListener {
+            val position = holder.adapterPosition
+            val id = data[position].id
+            expandedItemsId.remove(id)
+            deleteClickListener?.invoke(holder.adapterPosition)
         }
         return holder
     }
@@ -46,6 +76,6 @@ class ListRecyclerViewAdapter : RecyclerView.Adapter<ListViewHolder>() {
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         holder.onBind(data[position])
-        holder.setExpandedPartVisibility(expandedItemsId.contains(data[position].list))
+        holder.setExpandedPartVisibility(expandedItemsId.contains(data[position].id))
     }
 }
