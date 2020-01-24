@@ -5,13 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.fevgenson.timetable.R
+import com.fevgenson.timetable.adapter.ListRecyclerViewAdapter
 import com.fevgenson.timetable.viewmodel.ListViewModel
 import com.fevgenson.timetable.viewmodel_factory.BaseViewModelFactory
+import kotlinx.android.synthetic.main.fragment_list.*
 
 class ListFragment : Fragment() {
     private lateinit var viewModel: ListViewModel
+    private lateinit var adapter: ListRecyclerViewAdapter
 
     companion object {
         const val NAME = 0
@@ -39,6 +45,11 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initRecyclerView()
+        initViewModel()
+    }
+
+    private fun initViewModel() {
         val type = arguments!!.getInt(LIST_TYPE)
         viewModel =
             ViewModelProviders.of(this,
@@ -46,5 +57,25 @@ class ListFragment : Fragment() {
                     ListViewModel(type)
                 }
             ).get(type.toString(), ListViewModel::class.java)
+        viewModel.data.observe(this, Observer {
+            if (it.isEmpty()) {
+                emptyText.visibility = View.VISIBLE
+            } else {
+                emptyText.visibility = View.INVISIBLE
+            }
+            adapter.update(it)
+        })
+    }
+
+    private fun initRecyclerView() {
+        adapter = ListRecyclerViewAdapter()
+        listRecyclerView.adapter = adapter
+        listRecyclerView.layoutManager = LinearLayoutManager(activity)
+        listRecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                activity,
+                DividerItemDecoration.VERTICAL
+            )
+        )
     }
 }
