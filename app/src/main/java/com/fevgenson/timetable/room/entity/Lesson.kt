@@ -65,42 +65,42 @@ data class Lesson(
 
 @Entity(indices = [Index(value = ["name"], unique = true)])
 data class Name(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     var name: String
 )
 
 @Entity(indices = [Index(value = ["name"], unique = true)])
 data class Teacher(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     var name: String
 )
 
 @Entity(indices = [Index(value = ["name"], unique = true)])
 data class Building(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     var name: String
 )
 
 @Entity(indices = [Index(value = ["name"], unique = true)])
 data class Classroom(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     var name: String
 )
 
 @Entity(indices = [Index(value = ["name"], unique = true)])
 data class Type(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     var name: String
 )
 
 @Entity(indices = [Index(value = ["name"], unique = true)])
 data class Time(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     var name: String
 )

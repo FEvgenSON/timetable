@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         //load default fragment
         if (savedInstanceState == null) {
             loadFragment(DictionaryFragment())
+//            loadFragment(TimetableFragment())
         }
     }
 

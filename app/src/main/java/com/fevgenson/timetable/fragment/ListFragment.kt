@@ -66,6 +66,7 @@ class ListFragment : Fragment() {
             adapter.update(it)
         })
         adapter.expandedItemsId = viewModel.expandableItems
+        adapter.deleteClickListener = { viewModel.delete(it) }
     }
 
     private fun initRecyclerView() {
