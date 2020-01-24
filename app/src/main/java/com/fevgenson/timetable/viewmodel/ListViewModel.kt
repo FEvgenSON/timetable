@@ -9,6 +9,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 
 class ListViewModel(type: Int) : ViewModel() {
     val data = MutableLiveData<List<ListWithLessons>>()
+    var expandableItems = mutableListOf<String>()
 
     init {
         when (type) {

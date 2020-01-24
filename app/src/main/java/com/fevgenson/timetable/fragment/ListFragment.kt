@@ -65,6 +65,7 @@ class ListFragment : Fragment() {
             }
             adapter.update(it)
         })
+        adapter.expandedItemsId = viewModel.expandableItems
     }
 
     private fun initRecyclerView() {
@@ -77,5 +78,10 @@ class ListFragment : Fragment() {
                 DividerItemDecoration.VERTICAL
             )
         )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.expandableItems = adapter.expandedItemsId
     }
 }

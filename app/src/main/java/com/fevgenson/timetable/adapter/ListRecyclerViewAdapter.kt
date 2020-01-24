@@ -46,5 +46,6 @@ class ListRecyclerViewAdapter : RecyclerView.Adapter<ListViewHolder>() {
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         holder.onBind(data[position])
+        holder.setExpandedPartVisibility(expandedItemsId.contains(data[position].list))
     }
 }
