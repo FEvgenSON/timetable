@@ -20,6 +20,15 @@
         <item>Воскресенье</item>
     </string-array>
 
+    <string-array name="lists">
+        <item>Названия</item>
+        <item>Преподаватели</item>
+        <item>Корпуса</item>
+        <item>Аудитории</item>
+        <item>Типы</item>
+        <item>Время</item>
+    </string-array>
+
     <string name="name">Название</string>
     <string name="teacher">Преподаватель</string>
     <string name="building">Корпус</string>
