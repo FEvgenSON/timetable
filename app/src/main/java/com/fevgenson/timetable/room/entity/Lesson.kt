@@ -134,3 +134,40 @@ data class TeacherWithLessons(
     @Relation(parentColumn = "name", entityColumn = "time")
     var lessons: List<Lesson>
 )
+
+data class ListWithLessons(
+    var list: String,
+    var lessons: List<Lesson>
+) {
+    companion object {
+        fun getListFrom(list: NameWithLessons): ListWithLessons = ListWithLessons(
+            list = list.name,
+            lessons = list.lessons
+        )
+
+        fun getListFrom(list: TeacherWithLessons): ListWithLessons = ListWithLessons(
+            list = list.name,
+            lessons = list.lessons
+        )
+
+        fun getListFrom(list: BuildingWithLessons): ListWithLessons = ListWithLessons(
+            list = list.name,
+            lessons = list.lessons
+        )
+
+        fun getListFrom(list: ClassroomWithLessons): ListWithLessons = ListWithLessons(
+            list = list.name,
+            lessons = list.lessons
+        )
+
+        fun getListFrom(list: TypeWithLessons): ListWithLessons = ListWithLessons(
+            list = list.name,
+            lessons = list.lessons
+        )
+
+        fun getListFrom(list: TimeWithLessons): ListWithLessons = ListWithLessons(
+            list = list.name,
+            lessons = list.lessons
+        )
+    }
+}

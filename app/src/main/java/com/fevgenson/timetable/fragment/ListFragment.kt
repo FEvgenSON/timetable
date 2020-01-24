@@ -5,9 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.fevgenson.timetable.R
+import com.fevgenson.timetable.viewmodel.ListViewModel
+import com.fevgenson.timetable.viewmodel_factory.BaseViewModelFactory
 
 class ListFragment : Fragment() {
+    private lateinit var viewModel: ListViewModel
 
     companion object {
         const val NAME = 0
@@ -32,4 +36,15 @@ class ListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_list, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val type = arguments!!.getInt(LIST_TYPE)
+        viewModel =
+            ViewModelProviders.of(this,
+                BaseViewModelFactory {
+                    ListViewModel(type)
+                }
+            ).get(type.toString(), ListViewModel::class.java)
+    }
 }
