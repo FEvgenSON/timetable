@@ -66,4 +66,6 @@
     <string name="delete_ex">Удалить</string>
     <string name="cancel">Отмена</string>
     <string name="where">Куда</string>
+
+    <string name="empty">Пусто</string>
 </resources>
