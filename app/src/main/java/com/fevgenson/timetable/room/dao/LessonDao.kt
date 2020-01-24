@@ -83,6 +83,24 @@ abstract class LessonDao {
     @Update
     abstract fun updateLesson(lesson: Lesson)
 
+    @Update
+    abstract fun updateName(name: Name)
+
+    @Update
+    abstract fun updateTeacher(teacher: Teacher)
+
+    @Update
+    abstract fun updateBuilding(building: Building)
+
+    @Update
+    abstract fun updateClassroom(classroom: Classroom)
+
+    @Update
+    abstract fun updateType(type: Type)
+
+    @Update
+    abstract fun updateTime(time: Time)
+
     @Insert
     abstract fun insertLesson(lesson: Lesson)
 

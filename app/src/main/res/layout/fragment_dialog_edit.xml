@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:text="@string/edit"
+        android:textSize="18sp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:startIconDrawable="@drawable/ic_fiber_new_white_24dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/newValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/new_value" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/button_background"
+            android:backgroundTint="?colorControlHighlight"
+            android:padding="10dp"
+            android:text="@string/save"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/saveButton"
+            android:layout_marginEnd="5dp"
+            android:layout_toStartOf="@id/saveButton"
+            android:background="@drawable/button_background"
+            android:padding="5dp"
+            android:text="@string/cancel"
+            android:textColor="@android:color/darker_gray" />
+    </RelativeLayout>
+</LinearLayout>

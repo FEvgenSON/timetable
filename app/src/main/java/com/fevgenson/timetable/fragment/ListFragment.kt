@@ -67,6 +67,7 @@ class ListFragment : Fragment() {
         })
         adapter.expandedItemsId = viewModel.expandableItems
         adapter.deleteClickListener = { viewModel.delete(it) }
+        adapter.editClickListener = { startEditDialog(it) }
     }
 
     private fun initRecyclerView() {
@@ -79,6 +80,12 @@ class ListFragment : Fragment() {
                 DividerItemDecoration.VERTICAL
             )
         )
+    }
+
+    private fun startEditDialog(position: Int) {
+        val dialog = DialogEditFragment.newInstance(position)
+        dialog.attachViewModel(viewModel)
+        dialog.show(childFragmentManager, "")
     }
 
     override fun onPause() {

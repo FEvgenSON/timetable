@@ -21,7 +21,7 @@ class ListRecyclerViewAdapter : RecyclerView.Adapter<ListViewHolder>() {
         val result = DiffUtil.calculateDiff(
             object : DiffUtil.Callback() {
                 override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                    return newData[newItemPosition].id == data[oldItemPosition].id
+                    return newData[newItemPosition].list == data[newItemPosition].list
                 }
 
                 override fun getOldListSize() = data.size
@@ -34,7 +34,11 @@ class ListRecyclerViewAdapter : RecyclerView.Adapter<ListViewHolder>() {
                 ): Boolean {
                     val oldItem = data[oldItemPosition]
                     val newItem = newData[newItemPosition]
-                    return oldItem.lessons.size == newItem.lessons.size
+                    return if (oldItem.lessons.size == newItem.lessons.size) {
+                        oldItem.lessons == newItem.lessons
+                    } else {
+                        false
+                    }
                 }
             }
         )
@@ -63,7 +67,7 @@ class ListRecyclerViewAdapter : RecyclerView.Adapter<ListViewHolder>() {
         }
         //edit click listener
         holder.itemView.edit_ex.setOnClickListener {
-            editClickListener?.invoke(data[holder.adapterPosition].id)
+            editClickListener?.invoke(holder.adapterPosition)
         }
         //delete click listener
         holder.itemView.delete_ex.setOnClickListener {

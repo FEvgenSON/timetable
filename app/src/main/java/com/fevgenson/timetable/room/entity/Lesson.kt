@@ -9,36 +9,42 @@ import androidx.room.ForeignKey.CASCADE
         parentColumns = arrayOf("name"),
         childColumns = arrayOf("name"),
         onDelete = CASCADE,
+        onUpdate = CASCADE,
         deferred = true
     ), ForeignKey(
         entity = Teacher::class,
         parentColumns = arrayOf("name"),
         childColumns = arrayOf("teacher"),
         onDelete = CASCADE,
+        onUpdate = CASCADE,
         deferred = true
     ), ForeignKey(
         entity = Building::class,
         parentColumns = arrayOf("name"),
         childColumns = arrayOf("building"),
         onDelete = CASCADE,
+        onUpdate = CASCADE,
         deferred = true
     ), ForeignKey(
         entity = Classroom::class,
         parentColumns = arrayOf("name"),
         childColumns = arrayOf("classroom"),
         onDelete = CASCADE,
+        onUpdate = CASCADE,
         deferred = true
     ), ForeignKey(
         entity = Type::class,
         parentColumns = arrayOf("name"),
         childColumns = arrayOf("type"),
         onDelete = CASCADE,
+        onUpdate = CASCADE,
         deferred = true
     ), ForeignKey(
         entity = Time::class,
         parentColumns = arrayOf("name"),
         childColumns = arrayOf("time"),
         onDelete = CASCADE,
+        onUpdate = CASCADE,
         deferred = true
     )]
 )

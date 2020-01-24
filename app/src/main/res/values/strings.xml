@@ -68,4 +68,7 @@
     <string name="where">Куда</string>
 
     <string name="empty">Пусто</string>
+
+    <string name="new_value">Новое значение</string>
+    <string name="save">Сохранить</string>
 </resources>
