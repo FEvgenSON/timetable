@@ -6,9 +6,9 @@
         android:title="@string/timetable" />
 
     <item
-        android:id="@+id/navigationVocabulary"
-        android:icon="@drawable/ic_vocabulary_black_24dp"
-        android:title="@string/vocabulary" />
+        android:id="@+id/navigationDictionary"
+        android:icon="@drawable/ic_dictionary_black_24dp"
+        android:title="@string/dictionary" />
 
     <item
         android:id="@+id/navigationSettings"

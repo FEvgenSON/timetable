@@ -2,7 +2,7 @@
     <string name="app_name">timetable</string>
 
     <string name="timetable">Рассписание</string>
-    <string name="vocabulary">Словарь</string>
+    <string name="dictionary">Словарь</string>
     <string name="settings">Настройки</string>
 
     <string-array name="weeks">
