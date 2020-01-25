@@ -84,4 +84,22 @@ class ListViewModel(val type: Int) : ViewModel() {
         }.subscribeOn(Schedulers.io()).subscribe()
         return true
     }
+
+    fun add(newValue: String): Boolean {
+        data.value?.forEach { if (it.list == newValue) return false }
+        Completable.fromRunnable {
+            when (type) {
+                ListFragment.NAME -> DBHolder.database.lessonDao().insertName(Name(name = newValue))
+                ListFragment.TEACHER -> DBHolder.database.lessonDao()
+                    .insertTeacher(Teacher(name = newValue))
+                ListFragment.BUILDING -> DBHolder.database.lessonDao()
+                    .insertBuilding(Building(name = newValue))
+                ListFragment.CLASSROOM -> DBHolder.database.lessonDao()
+                    .insertClassroom(Classroom(name = newValue))
+                ListFragment.TYPE -> DBHolder.database.lessonDao().insertType(Type(name = newValue))
+                ListFragment.TIME -> DBHolder.database.lessonDao().insertTime(Time(name = newValue))
+            }
+        }.subscribeOn(Schedulers.io()).subscribe()
+        return true
+    }
 }
