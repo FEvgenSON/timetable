@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.fevgenson.timetable.R
-import com.fevgenson.timetable.fragment.DictionaryFragment
+import com.fevgenson.timetable.fragment.TimetableFragment
 import com.fevgenson.timetable.room.DBHolder
 import com.fevgenson.timetable.time.TimeChecker
 import kotlinx.android.synthetic.main.activity_main.*
@@ -22,8 +22,8 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
         //load default fragment
         if (savedInstanceState == null) {
-            loadFragment(DictionaryFragment())
-//            loadFragment(TimetableFragment())
+//            loadFragment(DictionaryFragment())
+            loadFragment(TimetableFragment())
         }
     }
 

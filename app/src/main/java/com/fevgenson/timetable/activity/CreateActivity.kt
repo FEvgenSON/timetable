@@ -47,7 +47,7 @@ class CreateActivity : AppCompatActivity() {
                 }
             ).get(CreateViewModel::class.java)
         viewModel.lesson.observe(this, Observer { showLesson(it) })
-        viewModel.layoutError.observe(this, Observer { showError(it) })
+        viewModel.nameError.observe(this, Observer { showNameError() })
         viewModel.toastError.observe(this, Observer { showErrorToast(it) })
         viewModel.finish.observe(this, Observer { finish() })
         //lists
@@ -93,10 +93,6 @@ class CreateActivity : AppCompatActivity() {
         endTimeTextView.setOnClickListener { showTimePicker(it as TextView) }
         //Error hider
         nameLayout.autoHidingError()
-        teacherLayout.autoHidingError()
-        buildingLayout.autoHidingError()
-        classroomLayout.autoHidingError()
-        typeLayout.autoHidingError()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -151,10 +147,9 @@ class CreateActivity : AppCompatActivity() {
         )
     }
 
-    private fun showError(id: Int) {
-        val textInputLayout = findViewById<TextInputLayout>(id)
-        textInputLayout.error = getText(R.string.empty_string_error)
-        textInputLayout.setFocus()
+    private fun showNameError() {
+        nameLayout.error = getText(R.string.empty_string_error)
+        nameLayout.setFocus()
     }
 
     private fun showErrorToast(message: Int) {
@@ -188,10 +183,6 @@ class CreateActivity : AppCompatActivity() {
     }
 
     private fun setListClickListener(button: TextView, type: Int, empty: Boolean = false) {
-        if (empty) {
-            Toast.makeText(this, R.string.list_empty, Toast.LENGTH_SHORT).show()
-            return
-        }
         val resultListener: (result: String, position: Int) -> Unit =
             if (type == DialogListFragment.TIME) {
                 { result, _ ->
@@ -209,6 +200,10 @@ class CreateActivity : AppCompatActivity() {
                 }
             }
         button.setOnClickListener {
+            if (empty) {
+                Toast.makeText(this, R.string.list_empty, Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val dialog = DialogListFragment.newInstance(type)
             dialog.resultListener = resultListener
             dialog.show(supportFragmentManager, "")
