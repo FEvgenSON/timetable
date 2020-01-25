@@ -47,7 +47,12 @@ class DictionaryFragment : Fragment() {
                 }
             ).get(position.toString(), ListViewModel::class.java)
         val dialog = DialogEditFragment.newInstance(
-            DialogEditFragment.CREATE
+            type = DialogEditFragment.CREATE,
+            inputType = when (position) {
+                0 -> DialogEditFragment.TEXT_NOT_NULL
+                5 -> DialogEditFragment.TIME
+                else -> -1
+            }
         )
         dialog.resultListener = { viewModel.add(it) }
         dialog.show(childFragmentManager, "")

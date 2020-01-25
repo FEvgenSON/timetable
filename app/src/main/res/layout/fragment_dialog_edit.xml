@@ -16,10 +16,10 @@
         android:textSize="18sp" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_marginTop="5dp"
         android:id="@+id/newValueLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         app:startIconDrawable="@drawable/ic_fiber_new_white_24dp">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -29,6 +29,64 @@
             android:hint="@string/new_value"
             android:inputType="textCapSentences" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <FrameLayout
+        android:id="@+id/startTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:padding="5dp"
+            android:text="@string/start"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/startTimeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:background="@drawable/button_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:freezesText="true"
+            android:text="@string/set"
+            android:textColor="?colorControlHighlight"
+            android:textSize="18sp" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/endTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:padding="5dp"
+            android:text="@string/end"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/endTimeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:background="@drawable/button_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:freezesText="true"
+            android:text="@string/set"
+            android:textColor="?colorControlHighlight"
+            android:textSize="18sp" />
+    </FrameLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

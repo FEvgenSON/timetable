@@ -85,7 +85,12 @@ class ListFragment : Fragment() {
     private fun startEditDialog(position: Int) {
         val dialog = DialogEditFragment.newInstance(
             DialogEditFragment.EDIT,
-            viewModel.data.value!![position].list
+            viewModel.data.value!![position].list,
+            when (viewModel.type) {
+                NAME -> DialogEditFragment.TEXT_NOT_NULL
+                TIME -> DialogEditFragment.TIME
+                else -> -1
+            }
         )
         dialog.resultListener = { viewModel.edit(position, it) }
         dialog.show(childFragmentManager, "")
