@@ -70,5 +70,6 @@
     <string name="empty">Пусто</string>
 
     <string name="new_value">Новое значение</string>
+    <string name="error_value_already_exist">Значение уже существует</string>
     <string name="save">Сохранить</string>
 </resources>

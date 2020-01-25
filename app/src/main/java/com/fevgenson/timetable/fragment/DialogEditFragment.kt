@@ -6,19 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.fevgenson.timetable.R
-import com.fevgenson.timetable.viewmodel.ListViewModel
 import kotlinx.android.synthetic.main.fragment_dialog_edit.*
 
 class DialogEditFragment : DialogFragment() {
-    var viewModel: ListViewModel? = null
-    var position = -1
+    var resultListener: ((result: String) -> Boolean)? = null
 
     companion object {
-        private const val POSITION = "position"
+        private const val TEXT = "text"
+        private const val TYPE = "type"
+        const val EDIT = 0
+        const val CREATE = 1
 
-        fun newInstance(position: Int): DialogEditFragment {
+        fun newInstance(type: Int, text: String = ""): DialogEditFragment {
             val bundle = Bundle()
-            bundle.putInt(POSITION, position)
+            bundle.putInt(TYPE, type)
+            bundle.putString(TEXT, text)
             val fragment = DialogEditFragment()
             fragment.arguments = bundle
             return fragment
@@ -35,19 +37,27 @@ class DialogEditFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        position = arguments!!.getInt(POSITION)
+        val arguments = arguments!!
+        if (arguments.getInt(TYPE) == EDIT) {
+            title.setText(R.string.edit)
+        } else {
+            title.setText(R.string.create)
+        }
+        newValue.setText(arguments.getString(TEXT, ""))
+
         saveButton.setOnClickListener {
-            if (viewModel!!.edit(position, newValue.text.toString())) {
+            if (resultListener == null) {
                 dismiss()
+            } else {
+                if (resultListener!!.invoke(newValue.text.toString())) {
+                    dismiss()
+                } else {
+                    newValueLayout.error = getString(R.string.error_value_already_exist)
+                }
             }
         }
         cancelButton.setOnClickListener {
             dismiss()
         }
-        newValue.setText(viewModel!!.data.value!![position].list)
-    }
-
-    fun attachViewModel(viewModel: ListViewModel) {
-        this.viewModel = viewModel
     }
 }
