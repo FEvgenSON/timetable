@@ -49,8 +49,8 @@ class DictionaryFragment : Fragment() {
         val dialog = DialogEditFragment.newInstance(
             type = DialogEditFragment.CREATE,
             inputType = when (position) {
-                0 -> DialogEditFragment.TEXT_NOT_NULL
-                5 -> DialogEditFragment.TIME
+                ListFragment.NAME -> DialogEditFragment.TEXT_NOT_NULL
+                ListFragment.TIME -> DialogEditFragment.TIME
                 else -> -1
             }
         )
