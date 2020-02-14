@@ -2,7 +2,7 @@
     <string name="app_name">timetable</string>
 
     <string name="timetable">Рассписание</string>
-    <string name="vocabulary">Словарь</string>
+    <string name="dictionary">Словарь</string>
     <string name="settings">Настройки</string>
 
     <string-array name="weeks">
@@ -18,6 +18,15 @@
         <item>Пятница</item>
         <item>Суббота</item>
         <item>Воскресенье</item>
+    </string-array>
+
+    <string-array name="lists">
+        <item>Названия</item>
+        <item>Преподаватели</item>
+        <item>Корпуса</item>
+        <item>Аудитории</item>
+        <item>Типы</item>
+        <item>Время</item>
     </string-array>
 
     <string name="name">Название</string>
@@ -57,4 +66,10 @@
     <string name="delete_ex">Удалить</string>
     <string name="cancel">Отмена</string>
     <string name="where">Куда</string>
+
+    <string name="empty">Пусто</string>
+
+    <string name="new_value">Новое значение</string>
+    <string name="error_value_already_exist">Значение уже существует</string>
+    <string name="save">Сохранить</string>
 </resources>

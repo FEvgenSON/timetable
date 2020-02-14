@@ -4,13 +4,15 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.fevgenson.timetable.R
-import com.fevgenson.timetable.room.entity.Lesson
-import kotlinx.android.synthetic.main.view_lesson.view.*
+import com.fevgenson.timetable.adapter.LessonRecyclerViewAdapterWithoutExpandPart
+import com.fevgenson.timetable.room.entity.ListWithLessons
+import kotlinx.android.synthetic.main.view_list_item.view.*
 
-class LessonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private var expandedPartVisible = false
+    private val adapter: LessonRecyclerViewAdapterWithoutExpandPart
 
     init {
         val color = ContextCompat.getColor(
@@ -24,22 +26,14 @@ class LessonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemView.edit_ex.colorFilter = PorterDuffColorFilter(
             color, PorterDuff.Mode.SRC_IN
         )
-        itemView.copy_ex.colorFilter = PorterDuffColorFilter(
-            color, PorterDuff.Mode.SRC_IN
-        )
+        itemView.usingLessons.layoutManager = LinearLayoutManager(itemView.context)
+        adapter = LessonRecyclerViewAdapterWithoutExpandPart()
+        itemView.usingLessons.adapter = adapter
     }
 
-    fun onBind(lesson: Lesson) {
-        itemView.lessonNameAndType.text = if (lesson.type.isBlank()) lesson.name else
-            itemView.context.getString(R.string.main_with_additional, lesson.name, lesson.type)
-        itemView.lessonTeacher.text = lesson.teacher
-        itemView.lessonPlace.text = if (lesson.building.isBlank()) lesson.classroom else
-            itemView.context.getString(
-                R.string.main_with_additional,
-                lesson.classroom,
-                lesson.building
-            )
-        itemView.lessonTime.text = lesson.time
+    fun onBind(listWithLessons: ListWithLessons) {
+        itemView.name.text = listWithLessons.list
+        adapter.update(listWithLessons.lessons)
     }
 
     fun setExpandedPartVisibility(visible: Boolean) {
@@ -50,14 +44,14 @@ class LessonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         if (visible) {
             itemView.divider.visibility = View.VISIBLE
             itemView.edit_ex.visibility = View.VISIBLE
-            itemView.copy_ex.visibility = View.VISIBLE
             itemView.delete_ex.visibility = View.VISIBLE
+            itemView.usingLessons.visibility = View.VISIBLE
             itemView.arrow.animate().rotation(180f)
         } else {
             itemView.divider.visibility = View.GONE
             itemView.edit_ex.visibility = View.GONE
-            itemView.copy_ex.visibility = View.GONE
             itemView.delete_ex.visibility = View.GONE
+            itemView.usingLessons.visibility = View.GONE
             itemView.arrow.animate().rotation(0f)
         }
     }

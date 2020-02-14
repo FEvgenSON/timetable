@@ -20,7 +20,7 @@ class CreateViewModel(var weekType: Int, var day: Int, private val id: Int) :
     val types = MutableLiveData<List<Type>>()
     val times = MutableLiveData<List<Time>>()
     val toastError = MutableLiveData<Int>()
-    val layoutError = MutableLiveData<Int>()
+    val nameError = MutableLiveData<Boolean>()
     val finish = MutableLiveData<Boolean>()
     private val disposable = CompositeDisposable()
 
@@ -79,23 +79,7 @@ class CreateViewModel(var weekType: Int, var day: Int, private val id: Int) :
     ) {
         //validate
         if (name.isBlank()) {
-            layoutError.value = R.id.nameLayout
-            return
-        }
-        if (teacher.isBlank()) {
-            layoutError.value = R.id.teacherLayout
-            return
-        }
-        if (building.isBlank()) {
-            layoutError.value = R.id.buildingLayout
-            return
-        }
-        if (classroom.isBlank()) {
-            layoutError.value = R.id.classroomLayout
-            return
-        }
-        if (type.isBlank()) {
-            layoutError.value = R.id.typeLayout
+            nameError.value = true
             return
         }
         if (!validateTime(startTime) || !validateTime(endTime)) {
@@ -109,10 +93,10 @@ class CreateViewModel(var weekType: Int, var day: Int, private val id: Int) :
         //save
         val savableLesson = lesson.value!!.copy()
         savableLesson.name = name
-        savableLesson.teacher = teacher
-        savableLesson.building = building
-        savableLesson.classroom = classroom
-        savableLesson.type = type
+        savableLesson.teacher = if (teacher.isBlank()) "" else teacher
+        savableLesson.building = if (building.isBlank()) "" else building
+        savableLesson.classroom = if (classroom.isBlank()) "" else classroom
+        savableLesson.type = if (type.isBlank()) "" else type
         savableLesson.time = "$startTime-$endTime"
         savableLesson.weekType = weekType
         savableLesson.day = day
