@@ -51,7 +51,7 @@ class DictionaryFragment : Fragment() {
             inputType = when (position) {
                 ListFragment.NAME -> DialogEditFragment.TEXT_NOT_NULL
                 ListFragment.TIME -> DialogEditFragment.TIME
-                else -> -1
+                else -> DialogEditFragment.TEXT_OR_NULL
             }
         )
         dialog.resultListener = { viewModel.add(it) }

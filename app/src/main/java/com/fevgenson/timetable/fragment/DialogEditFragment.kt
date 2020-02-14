@@ -21,10 +21,13 @@ class DialogEditFragment : DialogFragment() {
         private const val TEXT = "text"
         private const val TYPE = "type"
         private const val INPUT_TYPE = "inputType"
+
         const val EDIT = 0
         const val CREATE = 1
+
         const val TIME = 0
         const val TEXT_NOT_NULL = 1
+        const val TEXT_OR_NULL = 2
 
         fun newInstance(type: Int, text: String = "", inputType: Int): DialogEditFragment {
             val bundle = Bundle()
@@ -72,29 +75,19 @@ class DialogEditFragment : DialogFragment() {
         saveButton.setOnClickListener {
             if (resultListener == null) {
                 dismiss()
-            } else {
-                if (inputType == TEXT_NOT_NULL && newValue.text!!.isBlank()) {
-                    newValueLayout.error = getString(R.string.empty_string_error)
-                    return@setOnClickListener
+            }
+            when (inputType) {
+                TEXT_OR_NULL -> if (sendResult(newValue.text.toString())) dismiss() else showError(R.string.error_value_already_exist)
+                TEXT_NOT_NULL -> {
+                    if (!validateText()) return@setOnClickListener
+                    if (sendResult(newValue.text.toString())) dismiss() else showError(R.string.error_value_already_exist)
                 }
-                if (inputType == TIME) {
-                    if (!validateTime()) {
-                        return@setOnClickListener
-                    }
-                    if (resultListener!!.invoke("${startTimeTextView.text}-${endTimeTextView.text}")) {
+                TIME -> {
+                    if (!validateTime()) return@setOnClickListener
+                    if (sendResult("${startTimeTextView.text}-${endTimeTextView.text}")) {
                         dismiss()
                     } else {
-                        Toast.makeText(
-                            activity,
-                            R.string.error_value_already_exist,
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                } else {
-                    if (resultListener!!.invoke(newValue.text.toString())) {
-                        dismiss()
-                    } else {
-                        newValueLayout.error = getString(R.string.error_value_already_exist)
+                        showError(R.string.error_value_already_exist)
                     }
                 }
             }
@@ -126,6 +119,31 @@ class DialogEditFragment : DialogFragment() {
         ).show()
     }
 
+    private fun sendResult(result: String): Boolean {
+        return resultListener!!.invoke(result)
+    }
+
+    private fun showError(errorText: Int, toastError: Boolean = false) {
+        if (toastError) {
+            Toast.makeText(activity, errorText, Toast.LENGTH_LONG).show()
+        } else {
+            newValueLayout.error = getString(errorText)
+        }
+    }
+
+    private fun validateText(): Boolean {
+        return if (!validateText(newValue.text.toString())) {
+            showError(R.string.empty_string_error)
+            false
+        } else {
+            true
+        }
+    }
+
+    private fun validateText(text: String): Boolean {
+        return !text.isBlank()
+    }
+
     private fun validateTime(time: String): Boolean {
         return time[0] == '0' || time[0] == '1' || time[0] == '2'
     }
@@ -134,11 +152,11 @@ class DialogEditFragment : DialogFragment() {
         val startTime = startTimeTextView.text.toString()
         val endTime = endTimeTextView.text.toString()
         if (!validateTime(startTime) || !validateTime(endTime)) {
-            Toast.makeText(activity, R.string.empty_time_error, Toast.LENGTH_LONG).show()
+            showError(R.string.empty_time_error, true)
             return false
         }
         if (startTime >= endTime) {
-            Toast.makeText(activity, R.string.value_time_error, Toast.LENGTH_LONG).show()
+            showError(R.string.value_time_error, true)
             return false
         }
         return true
