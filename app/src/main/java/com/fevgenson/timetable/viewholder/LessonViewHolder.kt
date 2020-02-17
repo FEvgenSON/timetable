@@ -49,15 +49,11 @@ class LessonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         expandedPartVisible = visible
         if (visible) {
             itemView.divider.visibility = View.VISIBLE
-            itemView.edit_ex.visibility = View.VISIBLE
-            itemView.copy_ex.visibility = View.VISIBLE
-            itemView.delete_ex.visibility = View.VISIBLE
+            itemView.expanded_buttons.visibility = View.VISIBLE
             itemView.arrow.animate().rotation(180f)
         } else {
             itemView.divider.visibility = View.GONE
-            itemView.edit_ex.visibility = View.GONE
-            itemView.copy_ex.visibility = View.GONE
-            itemView.delete_ex.visibility = View.GONE
+            itemView.expanded_buttons.visibility = View.GONE
             itemView.arrow.animate().rotation(0f)
         }
     }

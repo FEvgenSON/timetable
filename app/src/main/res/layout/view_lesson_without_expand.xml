@@ -10,42 +10,56 @@
     android:focusable="true"
     android:foreground="?selectableItemBackground">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp">
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/lessonTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|top"
+                android:background="@drawable/highlight_background"
+                android:padding="5dp"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|top"
+                android:contentDescription="@string/arrow"
+                android:src="@drawable/ic_arrow_down_white_24dp" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/lessonNameAndType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:textSize="18sp" />
+            android:layout_marginTop="5dp"
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/lessonTeacher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/lessonNameAndType"
-            android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp"
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/lessonPlace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/lessonTeacher"
-            android:layout_alignParentStart="true"
-            android:layout_toStartOf="@id/lessonTime"
+            android:layout_marginTop="5dp"
             android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/lessonTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/lessonPlace"
-            android:layout_alignParentEnd="true"
-            android:textSize="18sp" />
-    </RelativeLayout>
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>
