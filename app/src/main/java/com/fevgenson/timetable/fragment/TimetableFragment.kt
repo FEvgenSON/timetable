@@ -1,6 +1,8 @@
 package com.fevgenson.timetable.fragment
 
 import android.content.Intent
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +30,9 @@ class TimetableFragment : Fragment() {
         override fun onTabUnselected(tab: TabLayout.Tab?) {
             val view = tab?.customView!!
             val color = ContextCompat.getColor(activity!!, android.R.color.darker_gray)
+            view.todayImg.colorFilter = PorterDuffColorFilter(
+                color, PorterDuff.Mode.SRC_IN
+            )
             view.tabText.setTextColor(color)
             view.date.setTextColor(color)
         }
@@ -35,6 +40,9 @@ class TimetableFragment : Fragment() {
         override fun onTabSelected(tab: TabLayout.Tab?) {
             val view = tab?.customView!!
             val color = ContextCompat.getColor(activity!!, android.R.color.white)
+            view.todayImg.colorFilter = PorterDuffColorFilter(
+                color, PorterDuff.Mode.SRC_IN
+            )
             view.tabText.setTextColor(color)
             view.date.setTextColor(color)
         }
