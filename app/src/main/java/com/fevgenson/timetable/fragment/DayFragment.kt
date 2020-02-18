@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fevgenson.timetable.R
@@ -78,16 +78,13 @@ class DayFragment : Fragment() {
     private fun initViewModel() {
         val weekType = arguments!!.getInt(WEEK_TYPE)
         val day = arguments!!.getInt(DAY)
-        viewModel =
-            ViewModelProviders.of(this,
-                BaseViewModelFactory {
-                    DayViewModel(weekType, day)
-                }
-            ).get("$weekType$day", DayViewModel::class.java)
+        viewModel = ViewModelProvider(this, BaseViewModelFactory { DayViewModel(weekType, day) })
+            .get("$weekType$day", DayViewModel::class.java)
     }
 
     private fun initViewModelListeners() {
         viewModel.lessons.observe(this, Observer {
+            lessonsLoadingProgressBar.visibility = View.GONE
             if (it.isNotEmpty()) {
                 noLessonText.visibility = View.INVISIBLE
             } else {

@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.fevgenson.timetable.R
 import com.fevgenson.timetable.activity.CreateActivity
@@ -57,7 +57,7 @@ class TimetableFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(TimetableViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(TimetableViewModel::class.java)
         addFloatingActionButton.setOnClickListener { startCreateActivity() }
         initViewPager()
     }

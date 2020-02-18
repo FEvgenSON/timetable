@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -54,12 +54,14 @@ class ListFragment : Fragment() {
     private fun initViewModel() {
         val type = arguments!!.getInt(LIST_TYPE)
         viewModel =
-            ViewModelProviders.of(this,
+            ViewModelProvider(
+                this,
                 BaseViewModelFactory {
                     ListViewModel(type)
                 }
             ).get(type.toString(), ListViewModel::class.java)
         viewModel.data.observe(this, Observer {
+            listLoadingProgressBar.visibility = View.GONE
             if (it.isEmpty()) {
                 emptyText.visibility = View.VISIBLE
             } else {
