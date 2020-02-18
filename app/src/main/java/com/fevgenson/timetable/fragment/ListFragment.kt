@@ -9,10 +9,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.fevgenson.timetable.R
 import com.fevgenson.timetable.adapter.ListRecyclerViewAdapter
 import com.fevgenson.timetable.viewmodel.ListViewModel
 import com.fevgenson.timetable.viewmodel_factory.BaseViewModelFactory
+import kotlinx.android.synthetic.main.fragment_dictionary.*
 import kotlinx.android.synthetic.main.fragment_list.*
 
 class ListFragment : Fragment() {
@@ -80,6 +82,20 @@ class ListFragment : Fragment() {
                 DividerItemDecoration.VERTICAL
             )
         )
+        listRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            //hide addFloatingActionButton on scroll
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val addButton =
+                    (parentFragment as DictionaryFragment).addFloatingActionButton
+                if (dy > 0 && addButton.visibility == View.VISIBLE) {
+                    addButton.hide()
+                }
+                if (dy < 0 && addButton.visibility == View.GONE) {
+                    addButton.show()
+                }
+            }
+        })
     }
 
     private fun startEditDialog(position: Int) {

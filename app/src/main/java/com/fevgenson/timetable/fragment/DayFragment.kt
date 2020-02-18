@@ -9,12 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.fevgenson.timetable.R
 import com.fevgenson.timetable.activity.CreateActivity
 import com.fevgenson.timetable.adapter.LessonRecyclerViewAdapter
 import com.fevgenson.timetable.viewmodel.DayViewModel
 import com.fevgenson.timetable.viewmodel_factory.BaseViewModelFactory
 import kotlinx.android.synthetic.main.fragment_day.*
+import kotlinx.android.synthetic.main.fragment_timetable.*
 
 class DayFragment : Fragment() {
     private lateinit var viewModel: DayViewModel
@@ -57,6 +59,20 @@ class DayFragment : Fragment() {
         lessonRecyclerViewAdapter.deleteClickListener = { viewModel.delete(it) }
         lessonRecyclerView.adapter = lessonRecyclerViewAdapter
         lessonRecyclerView.layoutManager = LinearLayoutManager(activity)
+        lessonRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            //hide addFloatingActionButton on scroll
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val addButton =
+                    (parentFragment?.parentFragment as TimetableFragment).addFloatingActionButton
+                if (dy > 0 && addButton.visibility == View.VISIBLE) {
+                    addButton.hide()
+                }
+                if (dy < 0 && addButton.visibility == View.GONE) {
+                    addButton.show()
+                }
+            }
+        })
     }
 
     private fun initViewModel() {
