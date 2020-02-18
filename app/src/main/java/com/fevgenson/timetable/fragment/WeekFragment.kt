@@ -65,13 +65,17 @@ class WeekFragment : Fragment() {
             } else {
                 view.todayImg.visibility = View.INVISIBLE
             }
-            val color = if (viewModel.savedSelectedDayType == position) {
-                ContextCompat.getColor(activity!!, android.R.color.white)
+            if (viewModel.savedSelectedDayType == position) {
+                TimetableFragment.setTabColor(
+                    tab,
+                    ContextCompat.getColor(activity!!, android.R.color.white)
+                )
             } else {
-                ContextCompat.getColor(activity!!, android.R.color.darker_gray)
+                TimetableFragment.setTabColor(
+                    tab,
+                    ContextCompat.getColor(activity!!, android.R.color.darker_gray)
+                )
             }
-            view.tabText.setTextColor(color)
-            view.date.setTextColor(color)
         }.attach()
         //restore select
         (parentFragment as TimetableFragment).dayTabs.getTabAt(viewModel.savedSelectedDayType)

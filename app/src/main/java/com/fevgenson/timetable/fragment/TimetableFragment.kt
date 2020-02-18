@@ -28,25 +28,23 @@ class TimetableFragment : Fragment() {
         }
 
         override fun onTabUnselected(tab: TabLayout.Tab?) {
-            val view = tab?.customView!!
-            val color = ContextCompat.getColor(activity!!, android.R.color.darker_gray)
-            view.todayImg.colorFilter = PorterDuffColorFilter(
-                color, PorterDuff.Mode.SRC_IN
-            )
-            view.tabText.setTextColor(color)
-            view.date.setTextColor(color)
+            setTabColor(tab!!, ContextCompat.getColor(activity!!, android.R.color.darker_gray))
         }
 
         override fun onTabSelected(tab: TabLayout.Tab?) {
-            val view = tab?.customView!!
-            val color = ContextCompat.getColor(activity!!, android.R.color.white)
+            setTabColor(tab!!, ContextCompat.getColor(activity!!, android.R.color.white))
+        }
+    }
+
+    companion object {
+        fun setTabColor(tab: TabLayout.Tab, color: Int) {
+            val view = tab.customView!!
             view.todayImg.colorFilter = PorterDuffColorFilter(
                 color, PorterDuff.Mode.SRC_IN
             )
             view.tabText.setTextColor(color)
             view.date.setTextColor(color)
         }
-
     }
 
     override fun onCreateView(
@@ -79,13 +77,11 @@ class TimetableFragment : Fragment() {
             } else {
                 view.todayImg.visibility = View.INVISIBLE
             }
-            val color = if (viewModel.savedSelectedWeekType == position) {
-                ContextCompat.getColor(activity!!, android.R.color.white)
+            if (viewModel.savedSelectedWeekType == position) {
+                setTabColor(tab, ContextCompat.getColor(activity!!, android.R.color.white))
             } else {
-                ContextCompat.getColor(activity!!, android.R.color.darker_gray)
+                setTabColor(tab, ContextCompat.getColor(activity!!, android.R.color.darker_gray))
             }
-            view.tabText.setTextColor(color)
-            view.date.setTextColor(color)
         }.attach()
         //restore select
         weekTabs.getTabAt(viewModel.savedSelectedWeekType)?.select()
