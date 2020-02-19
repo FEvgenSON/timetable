@@ -80,7 +80,7 @@ class LessonRecyclerViewAdapter(var currentDay: Boolean) :
     override fun getItemCount() = data.size
 
     override fun onBindViewHolder(holder: LessonViewHolder, position: Int) {
-        holder.onBind(data[position], currentDay)
+        holder.onBind(data[position])
         holder.setExpandedPartVisibility(expandedItemsId.contains(data[position].id))
     }
 }

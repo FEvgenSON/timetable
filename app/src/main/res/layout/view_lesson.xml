@@ -36,7 +36,7 @@
                     android:textColor="@android:color/white"
                     android:textSize="18sp" />
 
-                <TextView
+                <com.fevgenson.timetable.time.CustomTextClock
                     android:id="@+id/lessonStartEndTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -7,7 +7,6 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.fevgenson.timetable.R
 import com.fevgenson.timetable.room.entity.Lesson
-import com.fevgenson.timetable.time.TimeChecker
 import kotlinx.android.synthetic.main.view_lesson.view.*
 
 class LessonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -30,7 +29,7 @@ class LessonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         )
     }
 
-    fun onBind(lesson: Lesson, showTime: Boolean) {
+    fun onBind(lesson: Lesson) {
         itemView.lessonNameAndType.text = if (lesson.type.isBlank()) lesson.name else
             itemView.context.getString(R.string.main_with_additional, lesson.name, lesson.type)
         if (lesson.teacher.isBlank()) {
@@ -51,31 +50,9 @@ class LessonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 )
         }
         itemView.lessonTime.text = lesson.time
-        if (showTime) {
-            showTime(lesson.time)
-        } else {
-            itemView.lessonStartEndTime.text = null
-        }
-    }
-
-    private fun showTime(time: String) {
-        val currentTime = TimeChecker.getCurrentTime()
-        if (currentTime in
-            TimeChecker.getFirstTime(time)..TimeChecker.getSecondTime(time)
-        ) {
-            itemView.lessonStartEndTime.text = itemView.context.getString(
-                R.string.before_end, TimeChecker.minus(TimeChecker.getSecondTime(time), currentTime)
-            )
-            return
-        }
-        if (currentTime < TimeChecker.getFirstTime(time)) {
-            itemView.lessonStartEndTime.text = itemView.context.getString(
-                R.string.before_start,
-                TimeChecker.minus(TimeChecker.getFirstTime(time), currentTime)
-            )
-            return
-        }
-        itemView.lessonStartEndTime.text = null
+        itemView.lessonStartEndTime.time = lesson.time
+        itemView.lessonStartEndTime.day = lesson.day
+        itemView.lessonStartEndTime.weekType = lesson.weekType
     }
 
     fun setExpandedPartVisibility(visible: Boolean) {
