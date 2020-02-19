@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fevgenson.timetable.R
 import com.fevgenson.timetable.activity.CreateActivity
 import com.fevgenson.timetable.adapter.LessonRecyclerViewAdapter
+import com.fevgenson.timetable.time.TimeChecker
 import com.fevgenson.timetable.viewmodel.DayViewModel
 import com.fevgenson.timetable.viewmodel_factory.BaseViewModelFactory
 import kotlinx.android.synthetic.main.fragment_day.*
@@ -52,7 +53,8 @@ class DayFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        lessonRecyclerViewAdapter = LessonRecyclerViewAdapter()
+        lessonRecyclerViewAdapter =
+            LessonRecyclerViewAdapter(viewModel.day == TimeChecker.currentDay && viewModel.weekType == TimeChecker.currentWeekType)
         lessonRecyclerViewAdapter.expandedItemsId = viewModel.expandedItemsId
         lessonRecyclerViewAdapter.editClickListener = { startCreateActivity(it) }
         lessonRecyclerViewAdapter.copyClickListener = { startCopyDialog(it) }

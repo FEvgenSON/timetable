@@ -72,4 +72,7 @@
     <string name="new_value">Новое значение</string>
     <string name="error_value_already_exist">Значение уже существует</string>
     <string name="save">Сохранить</string>
+
+    <string name="before_start">До начала: %1$s</string>
+    <string name="before_end">До конца: %1$s</string>
 </resources>
