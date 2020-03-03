@@ -50,6 +50,7 @@ class WeekFragment : Fragment() {
     private fun initViewPager() {
         dayViewPager.offscreenPageLimit = 7
         dayViewPager.adapter = DayStateAdapter(this, arguments!!.getInt(WEEK_TYPE))
+        dayViewPager.setCurrentItem(viewModel.savedSelectedDayType, false)
         val dayTabTitles = resources.getStringArray(R.array.days)
         TabLayoutMediator(
             (parentFragment as TimetableFragment).dayTabs,
@@ -77,8 +78,5 @@ class WeekFragment : Fragment() {
                 )
             }
         }.attach()
-        //restore select
-        (parentFragment as TimetableFragment).dayTabs.getTabAt(viewModel.savedSelectedDayType)
-            ?.select()
     }
 }
