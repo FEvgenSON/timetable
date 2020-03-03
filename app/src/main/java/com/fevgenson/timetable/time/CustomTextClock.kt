@@ -5,16 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.util.AttributeSet
-import android.widget.TextView
 import com.fevgenson.timetable.R
 
-class CustomTextClock(context: Context?, attrs: AttributeSet?) : TextView(context, attrs) {
+class CustomTextClock(context: Context?, attrs: AttributeSet?) :
+    androidx.appcompat.widget.AppCompatTextView(context, attrs) {
     var time: String = ""
         set(time) {
             field = time
-            context.registerReceiver(timeAndDateChangeReceiver, observeFilter)
-            updateCurrentDay()
-            updateTime()
+            update()
         }
     private val observeFilter = IntentFilter()
 
@@ -29,8 +27,7 @@ class CustomTextClock(context: Context?, attrs: AttributeSet?) : TextView(contex
                 Intent.ACTION_TIME_TICK -> updateTime()
                 Intent.ACTION_DATE_CHANGED -> {
                     TimeChecker.init()
-                    updateCurrentDay()
-                    updateTime()
+                    update()
                 }
             }
         }
@@ -38,24 +35,19 @@ class CustomTextClock(context: Context?, attrs: AttributeSet?) : TextView(contex
     var day = -1
         set(day) {
             field = day
-            if (weekType != -1) {
-                updateCurrentDay()
-                if (time != "") {
-                    updateTime()
-                }
-            }
+            update()
         }
     var weekType = -1
         set(weekType) {
             field = weekType
-            if (day != -1) {
-                updateCurrentDay()
-                if (time != "") {
-                    updateTime()
-                }
-            }
+            update()
         }
     private var currentDay = false
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        context.registerReceiver(timeAndDateChangeReceiver, observeFilter)
+    }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
@@ -67,7 +59,7 @@ class CustomTextClock(context: Context?, attrs: AttributeSet?) : TextView(contex
     }
 
     private fun updateTime() {
-        if (!currentDay) {
+        if (!currentDay || time == "") {
             text = null
             return
         }
@@ -88,5 +80,10 @@ class CustomTextClock(context: Context?, attrs: AttributeSet?) : TextView(contex
             return
         }
         text = null
+    }
+
+    private fun update() {
+        updateCurrentDay()
+        updateTime()
     }
 }
