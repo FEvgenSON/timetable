@@ -1,37 +1,18 @@
 package com.fevgenson.timetable.time
 
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.util.AttributeSet
 import com.fevgenson.timetable.R
+import io.reactivex.disposables.CompositeDisposable
 
 class CustomTextClock(context: Context?, attrs: AttributeSet?) :
     androidx.appcompat.widget.AppCompatTextView(context, attrs) {
+    private val disposable = CompositeDisposable()
     var time: String = ""
         set(time) {
             field = time
             update()
         }
-    private val observeFilter = IntentFilter()
-
-    init {
-        observeFilter.addAction(Intent.ACTION_TIME_TICK)
-        observeFilter.addAction(Intent.ACTION_DATE_CHANGED)
-    }
-
-    private val timeAndDateChangeReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            when (intent?.action.toString()) {
-                Intent.ACTION_TIME_TICK -> updateTime()
-                Intent.ACTION_DATE_CHANGED -> {
-                    TimeChecker.init()
-                    update()
-                }
-            }
-        }
-    }
     var day = -1
         set(day) {
             field = day
@@ -46,12 +27,14 @@ class CustomTextClock(context: Context?, attrs: AttributeSet?) :
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        context.registerReceiver(timeAndDateChangeReceiver, observeFilter)
+        disposable.add(TimeObserver.minuteObservable.subscribe { updateTime() })
+        disposable.add(TimeObserver.dayObservable.subscribe { update() })
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        context.unregisterReceiver(timeAndDateChangeReceiver)
+        disposable.dispose()
+        disposable.clear()
     }
 
     private fun updateCurrentDay() {
