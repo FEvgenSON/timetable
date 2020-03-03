@@ -15,9 +15,11 @@ import com.fevgenson.timetable.R
 import com.fevgenson.timetable.activity.CreateActivity
 import com.fevgenson.timetable.adapter.WeekStateAdapter
 import com.fevgenson.timetable.time.TimeChecker
+import com.fevgenson.timetable.time.TimeObserver
 import com.fevgenson.timetable.viewmodel.TimetableViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_timetable.*
 import kotlinx.android.synthetic.main.view_tab.view.*
 
@@ -35,6 +37,7 @@ class TimetableFragment : Fragment() {
             setTabColor(tab!!, ContextCompat.getColor(activity!!, android.R.color.white))
         }
     }
+    private lateinit var disposable: Disposable
 
     companion object {
         fun setTabColor(tab: TabLayout.Tab, color: Int) {
@@ -60,6 +63,11 @@ class TimetableFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(TimetableViewModel::class.java)
         addFloatingActionButton.setOnClickListener { startCreateActivity() }
         initViewPager()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        disposable = TimeObserver.dayObservable.subscribe { updateTabs() }
     }
 
     private fun initViewPager() {
@@ -110,8 +118,26 @@ class TimetableFragment : Fragment() {
         })
     }
 
+    private fun updateTabs() {
+        //update days
+        val selectedWeek = weekTabs.selectedTabPosition
+        for (i in 0..6) {
+            val tabView = dayTabs.getTabAt(i)?.customView
+            tabView?.date?.text =
+                TimeChecker.dates[selectedWeek][i]
+            tabView?.todayImg?.visibility =
+                if (i == TimeChecker.currentDay && selectedWeek == TimeChecker.currentWeekType) View.VISIBLE else View.GONE
+        }
+        //update weeks
+        weekTabs.getTabAt(0)?.view?.todayImg?.visibility =
+            if (0 == TimeChecker.currentWeekType) View.VISIBLE else View.GONE
+        weekTabs.getTabAt(1)?.view?.todayImg?.visibility =
+            if (1 == TimeChecker.currentWeekType) View.VISIBLE else View.GONE
+    }
+
     override fun onPause() {
         super.onPause()
+        disposable.dispose()
         viewModel.savedSelectedWeekType = weekTabs.selectedTabPosition
         viewModel.savedSelectedDayType = dayTabs.selectedTabPosition
     }
