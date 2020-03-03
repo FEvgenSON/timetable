@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.fevgenson.timetable.R
 import com.fevgenson.timetable.adapter.DayStateAdapter
 import com.fevgenson.timetable.time.TimeChecker
@@ -42,7 +42,7 @@ class WeekFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(parentFragment as TimetableFragment)
+        viewModel = ViewModelProvider(parentFragment as TimetableFragment)
             .get(TimetableViewModel::class.java)
         initViewPager()
     }
@@ -65,13 +65,17 @@ class WeekFragment : Fragment() {
             } else {
                 view.todayImg.visibility = View.INVISIBLE
             }
-            val color = if (viewModel.savedSelectedDayType == position) {
-                ContextCompat.getColor(activity!!, android.R.color.white)
+            if (viewModel.savedSelectedDayType == position) {
+                TimetableFragment.setTabColor(
+                    tab,
+                    ContextCompat.getColor(activity!!, android.R.color.white)
+                )
             } else {
-                ContextCompat.getColor(activity!!, android.R.color.darker_gray)
+                TimetableFragment.setTabColor(
+                    tab,
+                    ContextCompat.getColor(activity!!, android.R.color.darker_gray)
+                )
             }
-            view.tabText.setTextColor(color)
-            view.date.setTextColor(color)
         }.attach()
         //restore select
         (parentFragment as TimetableFragment).dayTabs.getTabAt(viewModel.savedSelectedDayType)

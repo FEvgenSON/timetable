@@ -10,7 +10,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.fevgenson.timetable.R
 import com.fevgenson.timetable.fragment.DialogListFragment
 import com.fevgenson.timetable.room.entity.Lesson
@@ -36,16 +36,13 @@ class CreateActivity : AppCompatActivity() {
         setSupportActionBar(createActivityToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         //viewModel
-        viewModel =
-            ViewModelProviders.of(this,
-                BaseViewModelFactory {
-                    CreateViewModel(
-                        intent.getIntExtra(WEEK_TYPE, -1),
-                        intent.getIntExtra(DAY, -1),
-                        intent.getIntExtra(ID, -1)
-                    )
-                }
-            ).get(CreateViewModel::class.java)
+        viewModel = ViewModelProvider(this, BaseViewModelFactory {
+            CreateViewModel(
+                intent.getIntExtra(WEEK_TYPE, -1),
+                intent.getIntExtra(DAY, -1),
+                intent.getIntExtra(ID, -1)
+            )
+        }).get(CreateViewModel::class.java)
         viewModel.lesson.observe(this, Observer { showLesson(it) })
         viewModel.nameError.observe(this, Observer { showNameError() })
         viewModel.toastError.observe(this, Observer { showErrorToast(it) })

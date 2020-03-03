@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fevgenson.timetable.R
 import com.fevgenson.timetable.activity.CreateActivity
 import com.fevgenson.timetable.adapter.LessonRecyclerViewAdapter
+import com.fevgenson.timetable.time.TimeChecker
 import com.fevgenson.timetable.viewmodel.DayViewModel
 import com.fevgenson.timetable.viewmodel_factory.BaseViewModelFactory
 import kotlinx.android.synthetic.main.fragment_day.*
@@ -50,7 +51,8 @@ class DayFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        lessonRecyclerViewAdapter = LessonRecyclerViewAdapter()
+        lessonRecyclerViewAdapter =
+            LessonRecyclerViewAdapter(viewModel.day == TimeChecker.currentDay && viewModel.weekType == TimeChecker.currentWeekType)
         lessonRecyclerViewAdapter.expandedItemsId = viewModel.expandedItemsId
         lessonRecyclerViewAdapter.editClickListener = { startCreateActivity(it) }
         lessonRecyclerViewAdapter.copyClickListener = { startCopyDialog(it) }
@@ -62,16 +64,13 @@ class DayFragment : Fragment() {
     private fun initViewModel() {
         val weekType = arguments!!.getInt(WEEK_TYPE)
         val day = arguments!!.getInt(DAY)
-        viewModel =
-            ViewModelProviders.of(this,
-                BaseViewModelFactory {
-                    DayViewModel(weekType, day)
-                }
-            ).get("$weekType$day", DayViewModel::class.java)
+        viewModel = ViewModelProvider(this, BaseViewModelFactory { DayViewModel(weekType, day) })
+            .get("$weekType$day", DayViewModel::class.java)
     }
 
     private fun initViewModelListeners() {
-        viewModel.lessons.observe(this, Observer {
+        viewModel.lessons.observe(viewLifecycleOwner, Observer {
+            lessonsLoadingProgressBar.visibility = View.GONE
             if (it.isNotEmpty()) {
                 noLessonText.visibility = View.INVISIBLE
             } else {

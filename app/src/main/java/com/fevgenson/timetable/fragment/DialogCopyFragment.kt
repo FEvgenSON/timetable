@@ -65,6 +65,6 @@ class DialogCopyFragment : DialogFragment() {
                 weekType = position
             }
         }
-        dialog.show(fragmentManager!!, "")
+        dialog.show(childFragmentManager, "")
     }
 }

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.fevgenson.timetable.R
 import com.fevgenson.timetable.activity.CreateActivity
 import com.fevgenson.timetable.viewmodel.CreateViewModel
@@ -46,7 +46,7 @@ class DialogListFragment : DialogFragment() {
         when (arguments?.getInt(FRAGMENT_TYPE)) {
             TIME -> {
                 val viewModel =
-                    ViewModelProviders.of(activity!! as CreateActivity)
+                    ViewModelProvider(activity!! as CreateActivity)
                         .get(CreateViewModel::class.java)
                 listName.setText(R.string.choose_time)
                 initList(viewModel.times.value!!.map { it.name })

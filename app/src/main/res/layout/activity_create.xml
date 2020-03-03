@@ -128,7 +128,7 @@
                     android:focusable="true"
                     android:freezesText="true"
                     android:text="@string/set"
-                    android:textColor="?colorControlHighlight"
+                    android:textColor="?colorAccent"
                     android:textSize="18sp" />
             </FrameLayout>
 
@@ -155,7 +155,7 @@
                     android:focusable="true"
                     android:freezesText="true"
                     android:text="@string/set"
-                    android:textColor="?colorControlHighlight"
+                    android:textColor="?colorAccent"
                     android:textSize="18sp" />
             </FrameLayout>
 
@@ -169,7 +169,7 @@
                 android:focusable="true"
                 android:gravity="center"
                 android:text="@string/set_time"
-                android:textColor="?colorControlHighlight"
+                android:textColor="?colorAccent"
                 android:textSize="18sp" />
 
             <FrameLayout
@@ -195,7 +195,7 @@
                     android:focusable="true"
                     android:freezesText="true"
                     android:text="@string/set"
-                    android:textColor="?colorControlHighlight"
+                    android:textColor="?colorAccent"
                     android:textSize="18sp" />
             </FrameLayout>
 
@@ -222,7 +222,7 @@
                     android:focusable="true"
                     android:freezesText="true"
                     android:text="@string/set"
-                    android:textColor="?colorControlHighlight"
+                    android:textColor="?colorAccent"
                     android:textSize="18sp" />
             </FrameLayout>
         </LinearLayout>

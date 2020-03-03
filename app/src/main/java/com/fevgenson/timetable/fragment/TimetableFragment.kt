@@ -1,21 +1,25 @@
 package com.fevgenson.timetable.fragment
 
 import android.content.Intent
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.fevgenson.timetable.R
 import com.fevgenson.timetable.activity.CreateActivity
 import com.fevgenson.timetable.adapter.WeekStateAdapter
 import com.fevgenson.timetable.time.TimeChecker
+import com.fevgenson.timetable.time.TimeObserver
 import com.fevgenson.timetable.viewmodel.TimetableViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_timetable.*
 import kotlinx.android.synthetic.main.view_tab.view.*
 
@@ -26,19 +30,24 @@ class TimetableFragment : Fragment() {
         }
 
         override fun onTabUnselected(tab: TabLayout.Tab?) {
-            val view = tab?.customView!!
-            val color = ContextCompat.getColor(activity!!, android.R.color.darker_gray)
-            view.tabText.setTextColor(color)
-            view.date.setTextColor(color)
+            setTabColor(tab!!, ContextCompat.getColor(activity!!, android.R.color.darker_gray))
         }
 
         override fun onTabSelected(tab: TabLayout.Tab?) {
-            val view = tab?.customView!!
-            val color = ContextCompat.getColor(activity!!, android.R.color.white)
+            setTabColor(tab!!, ContextCompat.getColor(activity!!, android.R.color.white))
+        }
+    }
+    private lateinit var disposable: Disposable
+
+    companion object {
+        fun setTabColor(tab: TabLayout.Tab, color: Int) {
+            val view = tab.customView!!
+            view.todayImg.colorFilter = PorterDuffColorFilter(
+                color, PorterDuff.Mode.SRC_IN
+            )
             view.tabText.setTextColor(color)
             view.date.setTextColor(color)
         }
-
     }
 
     override fun onCreateView(
@@ -51,9 +60,14 @@ class TimetableFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(TimetableViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(TimetableViewModel::class.java)
         addFloatingActionButton.setOnClickListener { startCreateActivity() }
         initViewPager()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        disposable = TimeObserver.dayObservable.subscribe { updateTabs() }
     }
 
     private fun initViewPager() {
@@ -71,13 +85,11 @@ class TimetableFragment : Fragment() {
             } else {
                 view.todayImg.visibility = View.INVISIBLE
             }
-            val color = if (viewModel.savedSelectedWeekType == position) {
-                ContextCompat.getColor(activity!!, android.R.color.white)
+            if (viewModel.savedSelectedWeekType == position) {
+                setTabColor(tab, ContextCompat.getColor(activity!!, android.R.color.white))
             } else {
-                ContextCompat.getColor(activity!!, android.R.color.darker_gray)
+                setTabColor(tab, ContextCompat.getColor(activity!!, android.R.color.darker_gray))
             }
-            view.tabText.setTextColor(color)
-            view.date.setTextColor(color)
         }.attach()
         //restore select
         weekTabs.getTabAt(viewModel.savedSelectedWeekType)?.select()
@@ -106,8 +118,26 @@ class TimetableFragment : Fragment() {
         })
     }
 
+    private fun updateTabs() {
+        //update days
+        val selectedWeek = weekTabs.selectedTabPosition
+        for (i in 0..6) {
+            val tabView = dayTabs.getTabAt(i)?.customView
+            tabView?.date?.text =
+                TimeChecker.dates[selectedWeek][i]
+            tabView?.todayImg?.visibility =
+                if (i == TimeChecker.currentDay && selectedWeek == TimeChecker.currentWeekType) View.VISIBLE else View.GONE
+        }
+        //update weeks
+        weekTabs.getTabAt(0)?.view?.todayImg?.visibility =
+            if (0 == TimeChecker.currentWeekType) View.VISIBLE else View.GONE
+        weekTabs.getTabAt(1)?.view?.todayImg?.visibility =
+            if (1 == TimeChecker.currentWeekType) View.VISIBLE else View.GONE
+    }
+
     override fun onPause() {
         super.onPause()
+        disposable.dispose()
         viewModel.savedSelectedWeekType = weekTabs.selectedTabPosition
         viewModel.savedSelectedDayType = dayTabs.selectedTabPosition
     }

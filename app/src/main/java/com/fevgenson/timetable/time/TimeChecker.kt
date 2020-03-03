@@ -90,4 +90,15 @@ object TimeChecker {
         calendar.time = Date()
         return calendar.get(Calendar.MINUTE)
     }
+
+    fun minus(firstTime: String, secondTime: String): String {
+        var hour = getHours(firstTime).toInt() - getHours(secondTime).toInt()
+        val minutes = if (getMinutes(secondTime) > getMinutes(firstTime)) {
+            hour -= 1
+            60 + getMinutes(firstTime).toInt() - getMinutes(secondTime).toInt()
+        } else {
+            getMinutes(firstTime).toInt() - getMinutes(secondTime).toInt()
+        }
+        return String.format("%02d:%02d", hour, minutes)
+    }
 }

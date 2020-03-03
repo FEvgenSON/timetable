@@ -7,6 +7,7 @@ import com.fevgenson.timetable.fragment.DictionaryFragment
 import com.fevgenson.timetable.fragment.TimetableFragment
 import com.fevgenson.timetable.room.DBHolder
 import com.fevgenson.timetable.time.TimeChecker
+import com.fevgenson.timetable.time.TimeObserver
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //init
+        TimeObserver.init(applicationContext)
         DBHolder.init(applicationContext)
         TimeChecker.init()
         //action bar

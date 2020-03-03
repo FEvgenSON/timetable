@@ -37,7 +37,7 @@
             android:focusable="true"
             android:freezesText="true"
             android:text="@string/set"
-            android:textColor="?colorControlHighlight"
+            android:textColor="?colorAccent"
             android:textSize="18sp" />
     </FrameLayout>
 
@@ -64,7 +64,7 @@
             android:focusable="true"
             android:freezesText="true"
             android:text="@string/set"
-            android:textColor="?colorControlHighlight"
+            android:textColor="?colorAccent"
             android:textSize="18sp" />
     </FrameLayout>
 
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:background="@drawable/button_background"
-            android:backgroundTint="?colorControlHighlight"
+            android:backgroundTint="?colorAccent"
             android:padding="10dp"
             android:text="@string/copy_ex"
             android:textColor="@android:color/white" />

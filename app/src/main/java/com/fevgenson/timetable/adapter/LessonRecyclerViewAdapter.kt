@@ -11,7 +11,8 @@ import com.fevgenson.timetable.room.entity.Lesson
 import com.fevgenson.timetable.viewholder.LessonViewHolder
 import kotlinx.android.synthetic.main.view_lesson.view.*
 
-class LessonRecyclerViewAdapter : RecyclerView.Adapter<LessonViewHolder>() {
+class LessonRecyclerViewAdapter(var currentDay: Boolean) :
+    RecyclerView.Adapter<LessonViewHolder>() {
     private var data = listOf<Lesson>()
     var expandedItemsId = mutableListOf<Int>()
     var editClickListener: ((id: Int) -> Unit)? = null

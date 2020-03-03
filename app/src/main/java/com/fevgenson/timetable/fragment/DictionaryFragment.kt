@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.fevgenson.timetable.R
 import com.fevgenson.timetable.adapter.ListStateAdapter
 import com.fevgenson.timetable.viewmodel.ListViewModel
@@ -41,7 +41,8 @@ class DictionaryFragment : Fragment() {
 
     private fun startEditDialog(position: Int) {
         val viewModel =
-            ViewModelProviders.of(this,
+            ViewModelProvider(
+                this,
                 BaseViewModelFactory {
                     ListViewModel(position)
                 }
