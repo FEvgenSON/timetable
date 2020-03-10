@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_navigation"
+    app:startDestination="@id/timetableFragment"
+    tools:ignore="UnusedNavigation">
+
+    <save_state
+        android:id="@+id/timetableFragment"
+        android:name="com.fevgenson.timetable.fragment.TimetableFragment"
+        android:label="TimetableFragment" />
+    <save_state
+        android:id="@+id/dictionaryFragment"
+        android:name="com.fevgenson.timetable.fragment.DictionaryFragment"
+        android:label="DictionaryFragment" />
+    <save_state
+        android:id="@+id/settingsFragment"
+        android:name="com.fevgenson.timetable.fragment.SettingsFragment"
+        android:label="SettingsFragment" />
+</navigation>
