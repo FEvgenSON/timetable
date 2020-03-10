@@ -71,6 +71,7 @@ class TimetableFragment : Fragment() {
     }
 
     private fun initViewPager() {
+        dayTabs.post { dayTabs.setScrollPosition(viewModel.savedSelectedDayType, 0f, false, true) }
         weekViewPager.orientation = ViewPager2.ORIENTATION_VERTICAL
         weekViewPager.isUserInputEnabled = false
         weekViewPager.offscreenPageLimit = 2
