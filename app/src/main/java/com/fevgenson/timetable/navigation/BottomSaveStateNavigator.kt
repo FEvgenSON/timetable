@@ -27,7 +27,7 @@ class BottomSaveStateNavigator(
         //check current fragment
         val currentFragment = manager.primaryNavigationFragment
         val initialNavigate = if (currentFragment != null) {
-            transaction.detach(currentFragment)
+            transaction.hide(currentFragment)
             false
         } else
             true
@@ -38,7 +38,7 @@ class BottomSaveStateNavigator(
                 manager.fragmentFactory.instantiate(context.classLoader, destination.className)
             transaction.add(containerId, destinationFragment, tag)
         } else
-            transaction.attach(destinationFragment)
+            transaction.show(destinationFragment)
 
         transaction.setPrimaryNavigationFragment(destinationFragment)
         transaction.setReorderingAllowed(true)
