@@ -76,11 +76,14 @@ class NotificationService : LifecycleService() {
                 R.string.before_start,
                 TimeChecker.minus(firstTime, currentTime)
             )
-            currentTime in firstTime..secondTime -> getString(
+            currentTime > secondTime -> getString(
+                R.string.after_end,
+                TimeChecker.minus(currentTime, secondTime)
+            )
+            else -> getString(
                 R.string.before_end,
                 TimeChecker.minus(secondTime, currentTime)
             )
-            else -> getString(R.string.after_end, TimeChecker.minus(currentTime, secondTime))
         }
         if (!building.isBlank() || !classroom.isBlank()) {
             mainText += ", " + if (building.isBlank()) classroom else
@@ -137,9 +140,8 @@ class NotificationService : LifecycleService() {
 
     private fun Lesson.isNow(): Boolean {
         val currentTime = TimeChecker.getCurrentTime()
-        val firstTime = TimeChecker.getFirstTime(time)
         val secondTime = TimeChecker.getSecondTime(time)
-        return currentTime < firstTime || currentTime in firstTime..secondTime
+        return currentTime < secondTime
     }
 
     private fun updateNotification(notification: Notification) {
